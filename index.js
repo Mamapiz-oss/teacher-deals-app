@@ -8,14 +8,18 @@ const AMAZON_TAG = "mywebsit0e2ff-20";
    ========================= */
 
 const PRODUCTS = [
-  { title: "Dry-Erase Markers", category: "Daily Instruction", grades: "All", season: "All", price: "Often $10–$18", store: "Amazon", image: "✏️", link: `https://www.amazon.com/s?k=dry+erase+markers+classroom&tag=${AMAZON_TAG}` },
-  { title: "Pocket Charts", category: "Daily Instruction", grades: "K–5", season: "All", price: "Often $15–$30", store: "Amazon", image: "📊", link: `https://www.amazon.com/s?k=pocket+chart+classroom&tag=${AMAZON_TAG}` },
-  { title: "Teacher Desk Organizer", category: "Organization", grades: "All", season: "Back to School", price: "Often $15–$35", store: "Amazon", image: "🗂️", link: `https://www.amazon.com/s?k=teacher+desk+organizer&tag=${AMAZON_TAG}` },
-  { title: "Binders (1–3 inch)", category: "Organization", grades: "All", season: "All", price: "Typically $12–$30", store: "Target", image: "📁", link: "https://www.target.com/s?searchTerm=school+binders" },
-  { title: "Copy Paper (Bulk)", category: "Paper & Printing", grades: "All", season: "All", price: "Often $25–$45", store: "Staples", image: "📄", link: "https://www.staples.com/copy-paper/cat_CL1408" },
-  { title: "Laminating Sheets", category: "Paper & Printing", grades: "All", season: "Back to School", price: "Often $15–$30", store: "Amazon", image: "🖨️", link: `https://www.amazon.com/s?k=laminating+sheets+teacher&tag=${AMAZON_TAG}` },
-  { title: "Glue Sticks (Classroom Pack)", category: "Cutting & Craft", grades: "K–5", season: "All", price: "Usually under $15", store: "Amazon", image: "✂️", link: `https://www.amazon.com/s?k=glue+sticks+bulk+classroom&tag=${AMAZON_TAG}` },
-  { title: "Bulletin Board Borders", category: "Display & Decor", grades: "K–5", season: "Back to School", price: "Usually $6–$15", store: "Amazon", image: "📌", link: `https://www.amazon.com/s?k=bulletin+board+borders+classroom&tag=${AMAZON_TAG}` }
+  { title: "Dry-Erase Markers", category: "Daily Instruction", grades: "All", season: "All", price: "Often $10–$18", store: "Amazon", icon: "✏️", link: `https://www.amazon.com/s?k=dry+erase+markers+classroom&tag=${AMAZON_TAG}` },
+  { title: "Pocket Charts", category: "Daily Instruction", grades: "K–5", season: "All", price: "Often $15–$30", store: "Amazon", icon: "📊", link: `https://www.amazon.com/s?k=pocket+chart+classroom&tag=${AMAZON_TAG}` },
+
+  { title: "Teacher Desk Organizer", category: "Organization", grades: "All", season: "Back to School", price: "Often $15–$35", store: "Amazon", icon: "🗂️", link: `https://www.amazon.com/s?k=teacher+desk+organizer&tag=${AMAZON_TAG}` },
+  { title: "Binders (1–3 inch)", category: "Organization", grades: "All", season: "All", price: "Typically $12–$30", store: "Target", icon: "📁", link: "https://www.target.com/s?searchTerm=school+binders" },
+
+  { title: "Copy Paper (Bulk)", category: "Paper & Printing", grades: "All", season: "All", price: "Often $25–$45", store: "Staples", icon: "📄", link: "https://www.staples.com/copy-paper/cat_CL1408" },
+  { title: "Laminating Sheets", category: "Paper & Printing", grades: "All", season: "Back to School", price: "Often $15–$30", store: "Amazon", icon: "🖨️", link: `https://www.amazon.com/s?k=laminating+sheets+teacher&tag=${AMAZON_TAG}` },
+
+  { title: "Glue Sticks (Classroom Pack)", category: "Cutting & Craft", grades: "K–5", season: "All", price: "Usually under $15", store: "Amazon", icon: "✂️", link: `https://www.amazon.com/s?k=glue+sticks+bulk+classroom&tag=${AMAZON_TAG}` },
+
+  { title: "Bulletin Board Borders", category: "Display & Decor", grades: "K–5", season: "Back to School", price: "Usually $6–$15", store: "Amazon", icon: "📌", link: `https://www.amazon.com/s?k=bulletin+board+borders+classroom&tag=${AMAZON_TAG}` }
 ];
 
 /* =========================
@@ -34,10 +38,24 @@ function storeBadge(store) {
 }
 
 /* =========================
-   MAIN PAGE
+   MAIN ROUTE
    ========================= */
 
 app.get("/", (req, res) => {
+  const q = (req.query.q || "").toLowerCase();
+  const category = req.query.category || "";
+  const grade = req.query.grade || "";
+  const season = req.query.season || "";
+
+  const filtered = PRODUCTS.filter(p =>
+    p.title.toLowerCase().includes(q) &&
+    (!category || p.category === category) &&
+    (!grade || p.grades === grade || p.grades === "All") &&
+    (!season || p.season === season || p.season === "All")
+  );
+
+  const unique = key => [...new Set(PRODUCTS.map(p => p[key]))];
+
   res.send(`
 <!DOCTYPE html>
 <html>
@@ -69,12 +87,26 @@ body {
   display:inline-block;
 }
 
+.filters {
+  background:#eef1ec;
+  padding:30px 20px;
+  text-align:center;
+}
+
+.filters input, .filters select {
+  padding:12px 14px;
+  margin:6px;
+  border-radius:18px;
+  border:1px solid #ccc;
+  font-size:15px;
+}
+
 .grid {
   display:grid;
   grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
   gap:32px;
   max-width:1200px;
-  margin:70px auto;
+  margin:60px auto;
   padding:0 20px;
 }
 
@@ -84,17 +116,12 @@ body {
   padding:28px;
   box-shadow:0 14px 35px rgba(0,0,0,.08);
   text-align:center;
-  transition:transform .25s, box-shadow .25s;
+  transition:.25s;
 }
 
 .card:hover {
-  transform:translateY(-8px);
+  transform:translateY(-6px);
   box-shadow:0 22px 45px rgba(0,0,0,.14);
-}
-
-.card-image {
-  font-size:54px;
-  margin-bottom:14px;
 }
 
 .button {
@@ -102,7 +129,7 @@ body {
   margin-top:12px;
   background:#2f4f4f;
   color:white;
-  padding:10px 24px;
+  padding:10px 22px;
   border-radius:22px;
   font-size:14px;
   font-weight:600;
@@ -122,14 +149,33 @@ body {
   </div>
 </div>
 
+<div class="filters">
+  <form>
+    <input name="q" placeholder="Search supplies…" />
+    <select name="category">
+      <option value="">Category</option>
+      ${unique("category").map(c => `<option>${c}</option>`).join("")}
+    </select>
+    <select name="grade">
+      <option value="">Grade</option>
+      ${unique("grades").map(g => `<option>${g}</option>`).join("")}
+    </select>
+    <select name="season">
+      <option value="">Season</option>
+      ${unique("season").map(s => `<option>${s}</option>`).join("")}
+    </select>
+    <button class="button">Browse</button>
+  </form>
+</div>
+
 <div class="grid">
-  ${PRODUCTS.map(p => `
+  ${filtered.map(p => `
     <div class="card">
-      <div class="card-image">${p.image}</div>
+      <div style="font-size:52px;">${p.icon}</div>
       ${storeBadge(p.store)}
-      <h3 style="margin:14px 0 6px;">${p.title}</h3>
+      <h3>${p.title}</h3>
       <div style="font-size:14px;color:#777;">${p.category} • ${p.grades}</div>
-      <div style="font-size:18px;color:#2e7d32;font-weight:bold;margin:12px 0;">${p.price}</div>
+      <div style="font-size:18px;color:#2e7d32;font-weight:bold;">${p.price}</div>
       <a class="button" href="${p.link}" target="_blank">View Options →</a>
     </div>
   `).join("")}
