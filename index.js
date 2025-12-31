@@ -3,39 +3,72 @@ const app = express();
 
 const AMAZON_TAG = "mywebsit0e2ff-20";
 
+/* =========================
+   TEACHER SUPPLY INVENTORY
+   ========================= */
+
 const PRODUCTS = [
-  { title: "No. 2 Pencils (24 pack)", category: "Writing", price: "Typically under $6", store: "Walmart", featured: true, link: "https://www.walmart.com/search?q=no+2+pencils+teacher" },
-  { title: "Erasers (pink, 12 pack)", category: "Writing", price: "Usually $3–$5", store: "Amazon", featured: false, link: `https://www.amazon.com/s?k=pink+erasers+classroom&tag=${AMAZON_TAG}` },
 
-  { title: "Crayons (24 pack)", category: "Art", price: "Usually under $5", store: "Target", featured: true, link: "https://www.target.com/s?searchTerm=crayons+24+pack" },
-  { title: "Washable Markers (10 pack)", category: "Art", price: "Typically $5–$7", store: "Amazon", featured: false, link: `https://www.amazon.com/s?k=washable+markers+classroom&tag=${AMAZON_TAG}` },
+/* ✏️ Daily Instruction & Teaching Tools */
+{ title: "Dry-Erase Markers (Assorted Colors)", category: "Daily Instruction & Teaching Tools", price: "Often $10–$18", store: "Amazon", link: `https://www.amazon.com/s?k=dry+erase+markers+classroom&tag=${AMAZON_TAG}` },
+{ title: "Sticky Notes (Various Sizes & Colors)", category: "Daily Instruction & Teaching Tools", price: "Typically $8–$15", store: "Walmart", link: "https://www.walmart.com/search?q=sticky+notes+bulk" },
+{ title: "Pocket Charts", category: "Daily Instruction & Teaching Tools", price: "Often $15–$30", store: "Amazon", link: `https://www.amazon.com/s?k=pocket+chart+classroom&tag=${AMAZON_TAG}` },
+{ title: "Sentence Strips", category: "Daily Instruction & Teaching Tools", price: "Usually under $10", store: "Amazon", link: `https://www.amazon.com/s?k=sentence+strips+classroom&tag=${AMAZON_TAG}` },
+{ title: "Chart Paper (Lined & Unlined)", category: "Daily Instruction & Teaching Tools", price: "Often $12–$25", store: "Staples", link: "https://www.staples.com/chart-paper/cat_CL1416" },
 
-  { title: "Bulletin Board Borders", category: "Decor", price: "Usually $6–$10", store: "Amazon", featured: true, link: `https://www.amazon.com/s?k=bulletin+board+borders+classroom&tag=${AMAZON_TAG}` },
+/* 🗂️ Organization & Management */
+{ title: "Teacher Desk Organizer & Sorting Trays", category: "Organization & Management", price: "Often $15–$35", store: "Amazon", link: `https://www.amazon.com/s?k=teacher+desk+organizer&tag=${AMAZON_TAG}` },
+{ title: "File Folders (Assorted Colors)", category: "Organization & Management", price: "Typically $10–$20", store: "Walmart", link: "https://www.walmart.com/search?q=file+folders+assorted" },
+{ title: "Binders (1\"–3\")", category: "Organization & Management", price: "Typically $12–$30", store: "Target", link: "https://www.target.com/s?searchTerm=school+binders" },
+{ title: "Label Maker + Extra Labels", category: "Organization & Management", price: "Often $25–$50", store: "Amazon", link: `https://www.amazon.com/s?k=label+maker+teacher&tag=${AMAZON_TAG}` },
 
-  { title: "Chart Paper Pad", category: "Organization", price: "Often $12–$18", store: "Staples", featured: false, link: "https://www.staples.com/chart-paper/cat_CL1416" },
-  { title: "Plastic Storage Bins (set of 6)", category: "Organization", price: "Often $18–$25", store: "Target", featured: false, link: "https://www.target.com/s?searchTerm=plastic+storage+bins" },
+/* 🖨️ Paper & Printing */
+{ title: "Copy & Printer Paper (Bulk)", category: "Paper & Printing", price: "Often $25–$45", store: "Staples", link: "https://www.staples.com/copy-paper/cat_CL1408" },
+{ title: "Cardstock (White & Colors)", category: "Paper & Printing", price: "Typically $10–$20", store: "Amazon", link: `https://www.amazon.com/s?k=cardstock+paper+classroom&tag=${AMAZON_TAG}` },
+{ title: "Laminating Sheets (Pouches)", category: "Paper & Printing", price: "Often $15–$30", store: "Amazon", link: `https://www.amazon.com/s?k=laminating+sheets+teacher&tag=${AMAZON_TAG}` },
 
-  { title: "Prize Box Toys", category: "Incentives", price: "Often $15–$20", store: "Amazon", featured: true, link: `https://www.amazon.com/s?k=prize+box+toys+classroom&tag=${AMAZON_TAG}` }
+/* ✂️ Cutting & Craft Supplies */
+{ title: "Scissors (Student Safe & Adult)", category: "Cutting & Craft Supplies", price: "Typically $10–$25", store: "Walmart", link: "https://www.walmart.com/search?q=school+scissors+bulk" },
+{ title: "Glue Sticks (Classroom Pack)", category: "Cutting & Craft Supplies", price: "Usually under $15", store: "Amazon", link: `https://www.amazon.com/s?k=glue+sticks+bulk+classroom&tag=${AMAZON_TAG}` },
+{ title: "Stapler + Staples", category: "Cutting & Craft Supplies", price: "Typically $12–$25", store: "Target", link: "https://www.target.com/s?searchTerm=classroom+stapler" },
+
+/* 🎨 Creative & Makerspace */
+{ title: "Construction Paper (Large Packs)", category: "Creative & Makerspace", price: "Typically $12–$25", store: "Amazon", link: `https://www.amazon.com/s?k=construction+paper+bulk&tag=${AMAZON_TAG}` },
+{ title: "Pom Poms, Pipe Cleaners & Craft Sets", category: "Creative & Makerspace", price: "Often $15–$35", store: "Amazon", link: `https://www.amazon.com/s?k=classroom+craft+supplies&tag=${AMAZON_TAG}` },
+
+/* 📎 Classroom Tools & Technology */
+{ title: "Pencil Sharpener (Electric)", category: "Classroom Tools & Technology", price: "Often $20–$40", store: "Amazon", link: `https://www.amazon.com/s?k=electric+pencil+sharpener+classroom&tag=${AMAZON_TAG}` },
+{ title: "Headphones (Student Classroom Set)", category: "Classroom Tools & Technology", price: "Often $30–$70", store: "Amazon", link: `https://www.amazon.com/s?k=classroom+headphones+student+set&tag=${AMAZON_TAG}` },
+
+/* 📌 Display & Decoration */
+{ title: "Bulletin Board Borders", category: "Display & Decoration", price: "Usually $6–$15", store: "Amazon", link: `https://www.amazon.com/s?k=bulletin+board+borders+classroom&tag=${AMAZON_TAG}` },
+{ title: "Classroom Posters & Visuals", category: "Display & Decoration", price: "Often $15–$30", store: "Staples", link: "https://www.staples.com/classroom-posters/cat_CL1702" },
+
+/* 🧹 Classroom Cleanliness */
+{ title: "Disinfecting Wipes & Cleaning Supplies", category: "Classroom Cleanliness", price: "Often $20–$40", store: "Walmart", link: "https://www.walmart.com/search?q=disinfecting+wipes+bulk" },
+
+/* 🧑‍🏫 Assessment & Tracking */
+{ title: "Stickers & Student Rewards", category: "Assessment & Tracking", price: "Typically under $15", store: "Amazon", link: `https://www.amazon.com/s?k=teacher+stickers+rewards&tag=${AMAZON_TAG}` },
+{ title: "Dry-Erase Pockets & Data Trackers", category: "Assessment & Tracking", price: "Often $15–$30", store: "Amazon", link: `https://www.amazon.com/s?k=dry+erase+pockets+classroom&tag=${AMAZON_TAG}` },
+
+/* 🧒 Student Access & Engagement */
+{ title: "Individual Whiteboards & Timers", category: "Student Access & Engagement", price: "Often $20–$40", store: "Amazon", link: `https://www.amazon.com/s?k=student+whiteboards+classroom&tag=${AMAZON_TAG}` },
+{ title: "Play Money & Math Manipulatives", category: "Student Access & Engagement", price: "Typically under $20", store: "Target", link: "https://www.target.com/s?searchTerm=play+money+classroom" }
+
 ];
 
-function storeBadge(store) {
-  const colors = {
-    Walmart: "#0071ce",
-    Amazon: "#232f3e",
-    Target: "#cc0000",
-    Staples: "#444"
-  };
-  return `<span style="background:${colors[store]};color:white;padding:6px 14px;border-radius:18px;font-size:13px;font-weight:600;">${store}</span>`;
-}
+/* =========================
+   SERVER + UI
+   ========================= */
 
 app.get("/", (req, res) => {
-  const query = (req.query.q || "").toLowerCase();
   const category = req.query.category || "";
 
   const filtered = PRODUCTS.filter(p =>
-    p.title.toLowerCase().includes(query) &&
-    (!category || p.category === category)
+    !category || p.category === category
   );
+
+  const categories = [...new Set(PRODUCTS.map(p => p.category))];
 
   res.send(`
 <!DOCTYPE html>
@@ -44,104 +77,42 @@ app.get("/", (req, res) => {
 <title>Chalk & Save</title>
 </head>
 
-<body style="margin:0;font-family:'Segoe UI',Arial;background:#f6f8f4;color:#2f3e3e;">
+<body style="margin:0;font-family:Segoe UI,Arial;background:#f6f8f4;color:#2f3e3e;">
 
-<!-- HERO -->
-<div style="
-  background:url('https://images.unsplash.com/photo-1588072432836-e10032774350');
-  background-size:cover;
-  background-position:center;
-  padding:100px 20px;
-  text-align:center;
-  color:white;
-">
-  <div style="
-    background:rgba(0,0,0,.45);
-    display:inline-block;
-    padding:40px 50px;
-    border-radius:20px;
-  ">
-    <h1 style="font-size:48px;margin-bottom:10px;">✏️ Chalk & Save</h1>
-    <div style="
-      display:inline-block;
-      background:#f4f0e6;
-      color:#5a4a2f;
-      padding:8px 18px;
-      border-radius:20px;
-      font-weight:600;
-      margin-bottom:20px;
-    ">
-      Teacher-tested. Budget-approved.
-    </div>
-    <p style="max-width:620px;margin:20px auto 0;font-size:18px;">
-      A beautiful, stress-free way for teachers to find classroom essentials.
-    </p>
-  </div>
-</div>
+<div style="padding:80px 20px;text-align:center;background:#eef1ec;">
+  <h1 style="font-size:48px;">✏️ Chalk & Save</h1>
+  <p style="font-size:20px;max-width:700px;margin:20px auto;">
+    A beautifully organized way for teachers to shop for classroom essentials.
+  </p>
 
-<!-- FILTER BAR -->
-<div style="text-align:center;padding:40px 20px;background:#eef1ec;">
   <form>
-    <select name="category" style="padding:12px 16px;border-radius:20px;font-size:16px;">
-      <option value="">Browse by category</option>
-      <option>Writing</option>
-      <option>Art</option>
-      <option>Decor</option>
-      <option>Organization</option>
-      <option>Incentives</option>
+    <select name="category" style="padding:14px 18px;border-radius:24px;font-size:16px;">
+      <option value="">Browse by supply category</option>
+      ${categories.map(c => `<option>${c}</option>`).join("")}
     </select>
-    <button type="submit" style="
-      margin-left:10px;
-      padding:12px 24px;
-      border-radius:20px;
-      border:none;
-      background:#2f4f4f;
-      color:white;
-      font-size:16px;
-    ">
-      Go
+    <button type="submit" style="margin-left:10px;padding:14px 26px;border-radius:24px;border:none;background:#2f4f4f;color:white;font-size:16px;">
+      Browse
     </button>
   </form>
 </div>
 
-<!-- CARDS -->
-<div style="max-width:1100px;margin:40px auto 60px;text-align:center;">
+<div style="max-width:1200px;margin:50px auto;text-align:center;">
   ${filtered.map(p => `
-    <div style="
-      display:inline-block;
-      width:280px;
-      margin:18px;
-      padding:26px;
-      background:white;
-      border-radius:22px;
-      box-shadow:0 12px 30px rgba(0,0,0,.08);
-      vertical-align:top;
-      position:relative;
-    ">
-      ${p.featured ? `<div style="position:absolute;top:16px;right:16px;background:#f4c430;color:#5a4600;font-size:12px;font-weight:bold;padding:6px 12px;border-radius:20px;">⭐ Teacher Pick</div>` : ""}
-      <div style="margin-bottom:14px;">${storeBadge(p.store)}</div>
-      <div style="font-size:17px;font-weight:600;margin-bottom:12px;">${p.title}</div>
+    <div style="display:inline-block;width:300px;margin:18px;padding:26px;background:white;border-radius:22px;box-shadow:0 12px 30px rgba(0,0,0,.08);vertical-align:top;">
+      <div style="font-weight:600;font-size:17px;margin-bottom:10px;">${p.title}</div>
+      <div style="font-size:14px;color:#777;margin-bottom:8px;">${p.category}</div>
       <div style="font-size:18px;color:#2e7d32;font-weight:bold;margin-bottom:18px;">${p.price}</div>
-      <a href="${p.link}" target="_blank" style="
-        display:block;
-        background:#2f4f4f;
-        color:white;
-        padding:14px;
-        border-radius:14px;
-        font-size:15px;
-        text-decoration:none;
-      ">
-        View Deal →
+      <a href="${p.link}" target="_blank" style="display:block;background:#2f4f4f;color:white;padding:14px;border-radius:14px;text-decoration:none;">
+        View Options →
       </a>
     </div>
   `).join("")}
 </div>
 
-<!-- FOOTER -->
 <div style="text-align:center;padding:30px 20px;font-size:14px;color:#666;">
   <p>Prices shown are typical classroom price ranges.</p>
   <p><strong>Affiliate Disclosure:</strong> As an Amazon Associate, I earn from qualifying purchases.</p>
-  <p style="margin-top:12px;">Made with 💛 for teachers</p>
+  <p>Made with 💛 for teachers</p>
 </div>
 
 </body>
