@@ -62,12 +62,12 @@ app.get("/", (req, res) => {
           background: #2f4f4f;
           color: white;
           cursor: pointer;
-        }
         .grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-          gap: 20px;
-        }
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
         .card {
           background: white;
           padding: 20px;
