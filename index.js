@@ -14,73 +14,102 @@ const PRODUCTS = [
 
 app.get("/", (req, res) => {
   const query = (req.query.q || "").toLowerCase();
-
   const filtered = PRODUCTS.filter(p =>
     p.title.toLowerCase().includes(query)
   );
 
   res.send(`
-    <html>
-      <head>
-        <title>Teacher Deals</title>
-        <style>
-          body {
-            font-family: Arial, sans-serif;
-            background: #f6f7f5;
-            padding: 40px;
-          }
-          h1 {
-            color: #2f4f4f;
-          }
-          input {
-            padding: 10px;
-            width: 260px;
-            font-size: 16px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-          }
-          button {
-            padding: 10px 14px;
-            margin-left: 6px;
-            font-size: 16px;
-            border-radius: 6px;
-            border: none;
-            background: #2f4f4f;
-            color: white;
-            cursor: pointer;
-          }
-          .card {
-            background: white;
-            padding: 16px;
-            margin: 12px 0;
-            border-radius: 10px;
-            box-shadow: 0 2px 6px rgba(0,0,0,.08);
-          }
-          .price {
-            color: #2e7d32;
-            font-weight: bold;
-          }
-        </style>
-      </head>
-      <body>
+  <html>
+    <head>
+      <title>Teacher Deals</title>
+      <style>
+        body {
+          margin: 0;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+          background: #f4f6f3;
+          color: #2f3e3e;
+        }
+        header {
+          background: #ffffff;
+          padding: 20px 40px;
+          box-shadow: 0 2px 6px rgba(0,0,0,.06);
+        }
+        h1 {
+          margin: 0;
+          font-size: 28px;
+        }
+        .container {
+          max-width: 900px;
+          margin: 30px auto;
+          padding: 0 20px;
+        }
+        .search {
+          margin-bottom: 30px;
+        }
+        input {
+          padding: 12px;
+          width: 260px;
+          font-size: 16px;
+          border-radius: 8px;
+          border: 1px solid #ccc;
+        }
+        button {
+          padding: 12px 18px;
+          margin-left: 8px;
+          font-size: 16px;
+          border-radius: 8px;
+          border: none;
+          background: #2f4f4f;
+          color: white;
+          cursor: pointer;
+        }
+        .grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+          gap: 20px;
+        }
+        .card {
+          background: white;
+          padding: 20px;
+          border-radius: 14px;
+          box-shadow: 0 4px 12px rgba(0,0,0,.08);
+        }
+        .price {
+          color: #2e7d32;
+          font-weight: bold;
+          font-size: 18px;
+        }
+        .store {
+          font-size: 14px;
+          color: #6b6b6b;
+        }
+      </style>
+    </head>
+    <body>
+      <header>
         <h1>🍎 Teacher Deals</h1>
-        <p>Find the best classroom supply prices.</p>
+      </header>
 
-        <form>
-          <input type="text" name="q" placeholder="Search supplies..." />
+      <div class="container">
+        <p>Find the best classroom supply prices across stores.</p>
+
+        <form class="search">
+          <input type="text" name="q" placeholder="Search supplies…" />
           <button type="submit">Search</button>
         </form>
 
-        ${filtered.length === 0 ? "<p>No results found.</p>" : ""}
-
-        ${filtered.map(p => `
-          <div class="card">
-            <strong>${p.title}</strong><br>
-            <span class="price">${p.price}</span> — ${p.store}
-          </div>
-        `).join("")}
-      </body>
-    </html>
+        <div class="grid">
+          ${filtered.map(p => `
+            <div class="card">
+              <strong>${p.title}</strong><br><br>
+              <span class="price">${p.price}</span><br>
+              <span class="store">${p.store}</span>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    </body>
+  </html>
   `);
 });
 
