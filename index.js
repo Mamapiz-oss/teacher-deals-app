@@ -20,6 +20,150 @@ const PRODUCTS = [
   { title: "Glue Sticks (Classroom Pack)", category: "Cutting & Craft", grades: "K–5", season: "All", price: "Usually under $15", store: "Amazon", icon: "✂️", link: `https://www.amazon.com/s?k=glue+sticks+bulk+classroom&tag=${AMAZON_TAG}` },
 
   { title: "Bulletin Board Borders", category: "Display & Decor", grades: "K–5", season: "Back to School", price: "Usually $6–$15", store: "Amazon", icon: "📌", link: `https://www.amazon.com/s?k=bulletin+board+borders+classroom&tag=${AMAZON_TAG}` }
+{
+  id:"highlighters",
+  title:"Highlighters (Assorted Colors)",
+  category:"Daily Instruction & Teaching Tools",
+  grade:"All",
+  season:"All",
+  price:"Typically $6–$15",
+  store:"Amazon",
+  icon:"🖍️",
+  link:`https://www.amazon.com/s?k=highlighters+classroom&tag=${AMAZON_TAG}`
+},
+{
+  id:"sticky-notes",
+  title:"Sticky Notes (Various Sizes)",
+  category:"Daily Instruction & Teaching Tools",
+  grade:"All",
+  season:"All",
+  price:"Typically $8–$20",
+  store:"Amazon",
+  icon:"🗒️",
+  link:`https://www.amazon.com/s?k=sticky+notes+teacher&tag=${AMAZON_TAG}`
+},
+{
+  id:"sentence-strips",
+  title:"Sentence Strips",
+  category:"Daily Instruction & Teaching Tools",
+  grade:"K–5",
+  season:"All",
+  price:"Typically $5–$12",
+  store:"Amazon",
+  icon:"📏",
+  link:`https://www.amazon.com/s?k=sentence+strips+classroom&tag=${AMAZON_TAG}`
+}
+{
+  id:"file-folders",
+  title:"File Folders (Assorted Colors)",
+  category:"Organization & Management",
+  grade:"All",
+  season:"All",
+  price:"Typically $10–$25",
+  store:"Amazon",
+  icon:"🗂️",
+  link:`https://www.amazon.com/s?k=file+folders+teacher&tag=${AMAZON_TAG}`
+},
+{
+  id:"label-maker",
+  title:"Label Maker + Refill Labels",
+  category:"Organization & Management",
+  grade:"All",
+  season:"Back to School",
+  price:"Typically $20–$40",
+  store:"Amazon",
+  icon:"🏷️",
+  link:`https://www.amazon.com/s?k=label+maker+classroom&tag=${AMAZON_TAG}`
+}
+{
+  id:"cardstock",
+  title:"Cardstock (White & Colors)",
+  category:"Paper & Printing",
+  grade:"All",
+  season:"All",
+  price:"Typically $10–$25",
+  store:"Amazon",
+  icon:"📄",
+  link:`https://www.amazon.com/s?k=cardstock+paper&tag=${AMAZON_TAG}`
+},
+{
+  id:"construction-paper",
+  title:"Construction Paper (Bulk Packs)",
+  category:"Paper & Printing",
+  grade:"All",
+  season:"All",
+  price:"Typically $12–$30",
+  store:"Amazon",
+  icon:"📘",
+  link:`https://www.amazon.com/s?k=construction+paper+classroom&tag=${AMAZON_TAG}`
+}
+{
+  id:"glue-sticks",
+  title:"Glue Sticks (Classroom Pack)",
+  category:"Cutting & Craft Supplies",
+  grade:"All",
+  season:"All",
+  price:"Typically $8–$20",
+  store:"Amazon",
+  icon:"🧴",
+  link:`https://www.amazon.com/s?k=glue+sticks+classroom&tag=${AMAZON_TAG}`
+},
+{
+  id:"scissors",
+  title:"Scissors (Student Safe & Adult)",
+  category:"Cutting & Craft Supplies",
+  grade:"All",
+  season:"All",
+  price:"Typically $6–$18",
+  store:"Amazon",
+  icon:"✂️",
+  link:`https://www.amazon.com/s?k=scissors+classroom&tag=${AMAZON_TAG}`
+}
+{
+  id:"craft-sticks",
+  title:"Craft Sticks",
+  category:"Creative & Makerspace",
+  grade:"All",
+  season:"All",
+  price:"Typically $5–$15",
+  store:"Amazon",
+  icon:"🪵",
+  link:`https://www.amazon.com/s?k=craft+sticks&tag=${AMAZON_TAG}`
+},
+{
+  id:"pom-poms",
+  title:"Pom Poms (Assorted Colors)",
+  category:"Creative & Makerspace",
+  grade:"All",
+  season:"All",
+  price:"Typically $6–$18",
+  store:"Amazon",
+  icon:"🎨",
+  link:`https://www.amazon.com/s?k=pom+poms+craft&tag=${AMAZON_TAG}`
+}
+{
+  id:"bulletin-borders",
+  title:"Bulletin Board Borders",
+  category:"Display & Decoration",
+  grade:"All",
+  season:"All",
+  price:"Typically $6–$15",
+  store:"Amazon",
+  icon:"📌",
+  link:`https://www.amazon.com/s?k=bulletin+board+borders&tag=${AMAZON_TAG}`
+}
+{
+  id:"disinfecting-wipes",
+  title:"Disinfecting Wipes",
+  category:"Classroom Cleanliness",
+  grade:"All",
+  season:"Cold & Flu",
+  price:"Typically $10–$25",
+  store:"Amazon",
+  icon:"🧼",
+  link:`https://www.amazon.com/s?k=disinfecting+wipes&tag=${AMAZON_TAG}`
+}
+
 ];
 
 /* =========================
