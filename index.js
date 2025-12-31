@@ -2,12 +2,43 @@ const express = require("express");
 const app = express();
 
 const PRODUCTS = [
-  { title: "No. 2 Pencils (12 pack)", price: "$3.26", store: "Walmart", featured: true },
-  { title: "No. 2 Pencils (12 pack)", price: "$3.51", store: "Amazon", featured: false },
-  { title: "Crayons (24 pack)", price: "$4.19", store: "Target", featured: true },
-  { title: "Dry Erase Markers (4 pack)", price: "$6.99", store: "Staples", featured: false },
-  { title: "Glue Sticks (12 pack)", price: "$5.49", store: "Amazon", featured: false }
+  {
+    title: "No. 2 Pencils (12 pack)",
+    price: "$3.26",
+    store: "Walmart",
+    featured: true,
+    link: "https://www.walmart.com"
+  },
+  {
+    title: "No. 2 Pencils (12 pack)",
+    price: "$3.51",
+    store: "Amazon",
+    featured: false,
+    link: "https://www.amazon.com"
+  },
+  {
+    title: "Crayons (24 pack)",
+    price: "$4.19",
+    store: "Target",
+    featured: true,
+    link: "https://www.target.com"
+  },
+  {
+    title: "Dry Erase Markers (4 pack)",
+    price: "$6.99",
+    store: "Staples",
+    featured: false,
+    link: "https://www.staples.com"
+  },
+  {
+    title: "Glue Sticks (12 pack)",
+    price: "$5.49",
+    store: "Amazon",
+    featured: false,
+    link: "https://www.amazon.com"
+  }
 ];
+
 
 function storeBadge(store) {
   const styles = {
