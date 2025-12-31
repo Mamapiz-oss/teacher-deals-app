@@ -130,9 +130,23 @@ app.get("/", (req, res) => {
       <div style="font-weight:600;font-size:17px;">${p.title}</div>
       <div style="font-size:14px;color:#777;margin:6px 0;">${p.category} • ${p.grades}</div>
       <div style="font-size:18px;color:#2e7d32;font-weight:bold;margin:14px 0;">${p.price}</div>
-      <a href="${p.link}" target="_blank" style="display:block;background:#2f4f4f;color:white;padding:14px;border-radius:14px;text-decoration:none;">
-        View Options →
-      </a>
+      <a
+  href="${p.link}"
+  target="_blank"
+  style="
+    display:inline-block;
+    background:#2f4f4f;
+    color:white;
+    padding:10px 22px;
+    border-radius:22px;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:600;
+  "
+>
+  View Options →
+</a>
+
     </div>
   `).join("")}
 </div>
