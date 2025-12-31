@@ -237,8 +237,111 @@ function storeBadge(store) {
    ========================= */
 
 app.get("/", (req, res) => {
-  if (req.session.userEmail) return res.redirect("/shop");
-  res.send(`<h1 style="text-align:center;">✏️ Chalk & Save</h1><p style="text-align:center;"><a href="/login">Sign in</a></p>`);
+ if (req.session.userEmail) return res.redirect("/shop");
+
+res.send(`
+<!DOCTYPE html>
+<html>
+<head>
+<title>Chalk & Save</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(180deg, #fff7e8, #f6f8f4);
+}
+
+.hero {
+  max-width: 1200px;
+  margin: 80px auto 40px;
+  padding: 40px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 56px;
+  margin-bottom: 12px;
+}
+
+.hero p {
+  font-size: 22px;
+  color: #444;
+  margin-bottom: 36px;
+}
+
+.cta {
+  display: inline-block;
+  background: #ff9f1c;
+  color: white;
+  padding: 18px 40px;
+  border-radius: 32px;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+}
+
+.supplies {
+  max-width: 1100px;
+  margin: 60px auto 100px;
+  padding: 0 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 28px;
+}
+
+.supply-card {
+  background: white;
+  border-radius: 26px;
+  padding: 26px 20px;
+  text-align: center;
+  box-shadow: 0 14px 35px rgba(0,0,0,0.1);
+}
+
+.supply-card span {
+  font-size: 44px;
+  display: block;
+  margin-bottom: 14px;
+}
+
+.supply-card h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>✏️ Chalk & Save</h1>
+  <p>
+    Your happy place for classroom shopping.<br>
+    Find real deals, save your favorites, and buy smarter.
+  </p>
+  <a class="cta" href="/login">Sign in & start saving →</a>
+</div>
+
+<!-- SUPPLY PREVIEW -->
+<div class="supplies">
+  <div class="supply-card"><span>✏️</span><h3>Writing Tools</h3></div>
+  <div class="supply-card"><span>🗂️</span><h3>Organization</h3></div>
+  <div class="supply-card"><span>📄</span><h3>Paper & Printing</h3></div>
+  <div class="supply-card"><span>✂️</span><h3>Craft Supplies</h3></div>
+  <div class="supply-card"><span>📌</span><h3>Bulletin Boards</h3></div>
+  <div class="supply-card"><span>🖍️</span><h3>Creative Tools</h3></div>
+  <div class="supply-card"><span>🧼</span><h3>Classroom Cleanliness</h3></div>
+  <div class="supply-card"><span>🎒</span><h3>Student Supplies</h3></div>
+</div>
+
+</body>
+</html>
+`);
+
 });
 
 app.get("/login", (req, res) => {
