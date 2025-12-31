@@ -1,3 +1,5 @@
+console.log("🔥 NEW AUTH VERSION LOADED 🔥");
+
 const express = require("express");
 const session = require("express-session");
 const bodyParser = require("body-parser");
