@@ -264,6 +264,10 @@ app.get("/shop", requireLogin, (req, res) => {
         </div>
       `).join("")}
     </div>
+    <p style="text-align:center;margin:60px 0;color:#666;font-size:14px;">
+  <a href="/partner">Partner With Us</a>
+</p>
+
   `);
 });
 
