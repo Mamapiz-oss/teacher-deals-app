@@ -17,82 +17,52 @@ app.use(
 );
 
 /* =========================
-   USERS (PHASE 1 – MEMORY)
+   USERS (IN-MEMORY)
    ========================= */
+const USERS = {}; 
 // USERS[email] = { password, favorites: [] }
-const USERS = {};
 
 /* =========================
-   PRODUCTS (MASTER LIST)
+   PRODUCTS
    ========================= */
 
 const PRODUCTS = [
 
-  // ===== DAILY INSTRUCTION =====
+  // DAILY INSTRUCTION
   {
     id:"dry-erase-markers",
     title:"Dry-Erase Markers (Assorted Colors)",
-    category:"Daily Instruction & Teaching Tools",
-    grade:"All",
-    season:"All",
-    price:"Typically $10–$18",
+    category:"Daily Instruction",
+    price:"$10–$18",
     store:"Amazon",
     icon:"✏️",
     link:`https://www.amazon.com/s?k=dry+erase+markers+classroom&tag=${AMAZON_TAG}`
   },
   {
-    id:"highlighters",
-    title:"Highlighters (Multi-Color Packs)",
-    category:"Daily Instruction & Teaching Tools",
-    grade:"All",
-    season:"All",
-    price:"Typically $6–$15",
-    store:"Amazon",
-    icon:"🖍️",
-    link:`https://www.amazon.com/s?k=highlighters+classroom&tag=${AMAZON_TAG}`
-  },
-  {
     id:"sticky-notes",
-    title:"Sticky Notes (Various Sizes)",
-    category:"Daily Instruction & Teaching Tools",
-    grade:"All",
-    season:"All",
-    price:"Typically $8–$20",
+    title:"Sticky Notes (Multi-Size Packs)",
+    category:"Daily Instruction",
+    price:"$8–$20",
     store:"Amazon",
     icon:"🗒️",
     link:`https://www.amazon.com/s?k=sticky+notes+teacher&tag=${AMAZON_TAG}`
   },
   {
-    id:"sentence-strips",
-    title:"Sentence Strips",
-    category:"Daily Instruction & Teaching Tools",
-    grade:"K–5",
-    season:"All",
-    price:"Typically $5–$12",
-    store:"Amazon",
-    icon:"📏",
-    link:`https://www.amazon.com/s?k=sentence+strips+classroom&tag=${AMAZON_TAG}`
-  },
-  {
     id:"pocket-charts",
     title:"Pocket Charts",
-    category:"Daily Instruction & Teaching Tools",
-    grade:"K–5",
-    season:"All",
-    price:"Typically $15–$30",
+    category:"Daily Instruction",
+    price:"$15–$30",
     store:"Amazon",
     icon:"📊",
     link:`https://www.amazon.com/s?k=pocket+chart+classroom&tag=${AMAZON_TAG}`
   },
 
-  // ===== ORGANIZATION =====
+  // ORGANIZATION
   {
     id:"desk-organizer",
     title:"Teacher Desk Organizer",
-    category:"Organization & Management",
-    grade:"All",
-    season:"Back to School",
-    price:"Typically $15–$35",
+    category:"Organization",
+    price:"$15–$35",
     store:"Amazon",
     icon:"🗂️",
     link:`https://www.amazon.com/s?k=teacher+desk+organizer&tag=${AMAZON_TAG}`
@@ -100,111 +70,74 @@ const PRODUCTS = [
   {
     id:"file-folders",
     title:"File Folders (Assorted Colors)",
-    category:"Organization & Management",
-    grade:"All",
-    season:"All",
-    price:"Typically $10–$25",
+    category:"Organization",
+    price:"$10–$25",
     store:"Amazon",
     icon:"📁",
     link:`https://www.amazon.com/s?k=file+folders+teacher&tag=${AMAZON_TAG}`
   },
-  {
-    id:"label-maker",
-    title:"Label Maker + Refill Labels",
-    category:"Organization & Management",
-    grade:"All",
-    season:"Back to School",
-    price:"Typically $20–$40",
-    store:"Amazon",
-    icon:"🏷️",
-    link:`https://www.amazon.com/s?k=label+maker+classroom&tag=${AMAZON_TAG}`
-  },
 
-  // ===== PAPER & PRINTING =====
+  // PAPER & PRINTING
   {
     id:"copy-paper",
     title:"Copy Paper (Bulk)",
     category:"Paper & Printing",
-    grade:"All",
-    season:"All",
-    price:"Typically $25–$45",
+    price:"$25–$45",
     store:"Staples",
     icon:"📄",
     link:"https://www.staples.com/copy-paper/cat_CL1408"
   },
   {
-    id:"cardstock",
-    title:"Cardstock (White & Colors)",
-    category:"Paper & Printing",
-    grade:"All",
-    season:"All",
-    price:"Typically $10–$25",
-    store:"Amazon",
-    icon:"📘",
-    link:`https://www.amazon.com/s?k=cardstock+paper&tag=${AMAZON_TAG}`
-  },
-  {
     id:"construction-paper",
     title:"Construction Paper (Bulk Packs)",
     category:"Paper & Printing",
-    grade:"All",
-    season:"All",
-    price:"Typically $12–$30",
+    price:"$12–$30",
     store:"Amazon",
-    icon:"📗",
+    icon:"📘",
     link:`https://www.amazon.com/s?k=construction+paper+classroom&tag=${AMAZON_TAG}`
   },
 
-  // ===== CRAFTS =====
+  // CRAFTS
   {
     id:"glue-sticks",
     title:"Glue Sticks (Classroom Pack)",
-    category:"Cutting & Craft Supplies",
-    grade:"All",
-    season:"All",
-    price:"Typically $8–$20",
+    category:"Craft Supplies",
+    price:"$8–$20",
     store:"Amazon",
     icon:"🧴",
     link:`https://www.amazon.com/s?k=glue+sticks+classroom&tag=${AMAZON_TAG}`
   },
   {
     id:"scissors",
-    title:"Scissors (Student Safe & Adult)",
-    category:"Cutting & Craft Supplies",
-    grade:"All",
-    season:"All",
-    price:"Typically $6–$18",
+    title:"Scissors (Student-Safe)",
+    category:"Craft Supplies",
+    price:"$6–$18",
     store:"Amazon",
     icon:"✂️",
     link:`https://www.amazon.com/s?k=scissors+classroom&tag=${AMAZON_TAG}`
   },
 
-  // ===== DISPLAY =====
+  // DISPLAY
   {
     id:"bulletin-borders",
     title:"Bulletin Board Borders",
-    category:"Display & Decoration",
-    grade:"All",
-    season:"All",
-    price:"Typically $6–$15",
+    category:"Display & Decor",
+    price:"$6–$15",
     store:"Amazon",
     icon:"📌",
     link:`https://www.amazon.com/s?k=bulletin+board+borders&tag=${AMAZON_TAG}`
   },
 
-  // ===== CLEANLINESS =====
+  // CLEANLINESS
   {
     id:"disinfecting-wipes",
     title:"Disinfecting Wipes",
     category:"Classroom Cleanliness",
-    grade:"All",
-    season:"Cold & Flu",
-    price:"Typically $10–$25",
+    price:"$10–$25",
     store:"Amazon",
     icon:"🧼",
     link:`https://www.amazon.com/s?k=disinfecting+wipes&tag=${AMAZON_TAG}`
   }
-
 ];
 
 /* =========================
@@ -218,18 +151,17 @@ function requireLogin(req, res, next) {
   next();
 }
 
-function unique(field) {
-  return [...new Set(PRODUCTS.map(p => p[field]))];
-}
-
 function storeBadge(store) {
   const map = {
     Amazon:["🛒","#232f3e"],
-    Target:["🎯","#cc0000"],
     Staples:["📎","#444"]
   };
   const [icon,color] = map[store];
-  return `<span style="background:${color};color:white;padding:6px 14px;border-radius:16px;font-size:13px;font-weight:600;">${icon} ${store}</span>`;
+  return `<span style="background:${color};color:white;padding:6px 14px;border-radius:16px;font-size:13px;">${icon} ${store}</span>`;
+}
+
+function uniqueCategories() {
+  return [...new Set(PRODUCTS.map(p => p.category))];
 }
 
 /* =========================
@@ -237,119 +169,22 @@ function storeBadge(store) {
    ========================= */
 
 app.get("/", (req, res) => {
- if (req.session.userEmail) return res.redirect("/shop");
-
-res.send(`
-<!DOCTYPE html>
-<html>
-<head>
-<title>Chalk & Save</title>
-
-<style>
-body {
-  margin: 0;
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: linear-gradient(180deg, #fff7e8, #f6f8f4);
-}
-
-.hero {
-  max-width: 1200px;
-  margin: 80px auto 40px;
-  padding: 40px;
-  text-align: center;
-}
-
-.hero h1 {
-  font-size: 56px;
-  margin-bottom: 12px;
-}
-
-.hero p {
-  font-size: 22px;
-  color: #444;
-  margin-bottom: 36px;
-}
-
-.cta {
-  display: inline-block;
-  background: #ff9f1c;
-  color: white;
-  padding: 18px 40px;
-  border-radius: 32px;
-  font-size: 18px;
-  font-weight: 700;
-  text-decoration: none;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
-}
-
-.supplies {
-  max-width: 1100px;
-  margin: 60px auto 100px;
-  padding: 0 40px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 28px;
-}
-
-.supply-card {
-  background: white;
-  border-radius: 26px;
-  padding: 26px 20px;
-  text-align: center;
-  box-shadow: 0 14px 35px rgba(0,0,0,0.1);
-}
-
-.supply-card span {
-  font-size: 44px;
-  display: block;
-  margin-bottom: 14px;
-}
-
-.supply-card h3 {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 700;
-  color: #333;
-}
-</style>
-</head>
-
-<body>
-
-<!-- HERO -->
-<div class="hero">
-  <h1>✏️ Chalk & Save</h1>
-  <p>
-    Your happy place for classroom shopping.<br>
-    Find real deals, save your favorites, and buy smarter.
-  </p>
-  <a class="cta" href="/login">Sign in & start saving →</a>
-</div>
-
-<!-- SUPPLY PREVIEW -->
-<div class="supplies">
-  <div class="supply-card"><span>✏️</span><h3>Writing Tools</h3></div>
-  <div class="supply-card"><span>🗂️</span><h3>Organization</h3></div>
-  <div class="supply-card"><span>📄</span><h3>Paper & Printing</h3></div>
-  <div class="supply-card"><span>✂️</span><h3>Craft Supplies</h3></div>
-  <div class="supply-card"><span>📌</span><h3>Bulletin Boards</h3></div>
-  <div class="supply-card"><span>🖍️</span><h3>Creative Tools</h3></div>
-  <div class="supply-card"><span>🧼</span><h3>Classroom Cleanliness</h3></div>
-  <div class="supply-card"><span>🎒</span><h3>Student Supplies</h3></div>
-</div>
-
-</body>
-</html>
-`);
-
+  if (req.session.userEmail) return res.redirect("/shop");
+  res.send(`
+    <h1 style="text-align:center;margin-top:120px;">✏️ Chalk & Save</h1>
+    <p style="text-align:center;">Smart classroom shopping for teachers</p>
+    <p style="text-align:center;"><a href="/login">Sign in to start →</a></p>
+  `);
 });
+
+/* AUTH */
 
 app.get("/login", (req, res) => {
   res.send(`
-    <form method="POST" style="text-align:center;">
+    <form method="POST" style="text-align:center;margin-top:120px;">
       <h2>Sign In</h2>
-      <input name="email" placeholder="Email" required><br>
-      <input type="password" name="password" placeholder="Password" required><br>
+      <input name="email" placeholder="Email" required><br><br>
+      <input type="password" name="password" placeholder="Password" required><br><br>
       <button>Sign In</button>
       <p><a href="/signup">Create account</a></p>
     </form>
@@ -358,18 +193,20 @@ app.get("/login", (req, res) => {
 
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
-  if (!USERS[email] || USERS[email].password !== password) return res.redirect("/login");
+  if (!USERS[email] || USERS[email].password !== password) {
+    return res.redirect("/login");
+  }
   req.session.userEmail = email;
   res.redirect("/shop");
 });
 
 app.get("/signup", (req, res) => {
   res.send(`
-    <form method="POST" style="text-align:center;">
+    <form method="POST" style="text-align:center;margin-top:120px;">
       <h2>Create Account</h2>
-      <input name="email" placeholder="Email" required><br>
-      <input type="password" name="password" placeholder="Password" required><br>
-      <button>Create</button>
+      <input name="email" placeholder="Email" required><br><br>
+      <input type="password" name="password" placeholder="Password" required><br><br>
+      <button>Create Account</button>
     </form>
   `);
 });
@@ -381,14 +218,19 @@ app.post("/signup", (req, res) => {
   res.redirect("/shop");
 });
 
+/* FAVORITES */
+
 app.post("/favorite/:id", requireLogin, (req, res) => {
   const user = USERS[req.session.userEmail];
-  if (!user.favorites.includes(req.params.id)) user.favorites.push(req.params.id);
+  if (!user.favorites.includes(req.params.id)) {
+    user.favorites.push(req.params.id);
+  }
   res.redirect("/shop");
 });
 
+/* SHOP */
+
 app.get("/shop", requireLogin, (req, res) => {
-  const user = USERS[req.session.userEmail];
   const q = (req.query.q || "").toLowerCase();
   const category = req.query.category || "";
 
@@ -398,19 +240,20 @@ app.get("/shop", requireLogin, (req, res) => {
   );
 
   res.send(`
-    <form style="text-align:center;">
+    <form style="text-align:center;margin:40px;">
       <input name="q" placeholder="Search supplies…" value="${q}">
       <select name="category">
         <option value="">All Categories</option>
-        ${unique("category").map(c => `<option ${c===category?"selected":""}>${c}</option>`).join("")}
+        ${uniqueCategories().map(c => `<option ${c===category?"selected":""}>${c}</option>`).join("")}
       </select>
       <button>Search</button>
+      <a href="/logout" style="margin-left:20px;">Log out</a>
     </form>
 
     <div style="text-align:center;">
       ${filtered.map(p => `
         <div style="display:inline-block;width:260px;margin:16px;padding:20px;border-radius:22px;background:white;box-shadow:0 12px 30px rgba(0,0,0,.1);">
-          <div style="font-size:42px;">${p.icon}</div>
+          <div style="font-size:40px;">${p.icon}</div>
           ${storeBadge(p.store)}
           <h3>${p.title}</h3>
           <p>${p.price}</p>
@@ -428,9 +271,7 @@ app.get("/logout", (req, res) => {
   req.session.destroy(() => res.redirect("/"));
 });
 
-/* =========================
-   SERVER
-   ========================= */
+/* SERVER */
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
