@@ -14,7 +14,8 @@ function storeBadge(store) {
     Walmart: "background:#0071ce;color:white;",
     Amazon: "background:#232f3e;color:white;",
     Target: "background:#cc0000;color:white;",
-    Staples: "background:#cc0000;color:white;"
+    Staples: "background:#444;color:white;"
+
   };
   return `
     <span style="
