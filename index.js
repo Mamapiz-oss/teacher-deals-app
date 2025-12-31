@@ -39,26 +39,46 @@ app.get("/", (req, res) => {
   res.send(`
     <div style="
       font-family:'Segoe UI', Arial, sans-serif;
-      background: linear-gradient(180deg,#f8faf7,#eef3ef);
-      padding:60px 40px;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          #f9fbf8,
+          #f9fbf8 28px,
+          #e6ece6 29px
+        );
+      padding:70px 40px;
       min-height:100vh;
       position:relative;
       overflow:hidden;
     ">
 
       <!-- DECORATIVE SCHOOL EMOJIS -->
-      <div style="position:absolute;top:30px;left:30px;font-size:48px;opacity:.15;">✏️</div>
-      <div style="position:absolute;top:120px;right:50px;font-size:42px;opacity:.15;">📚</div>
-      <div style="position:absolute;bottom:80px;left:60px;font-size:44px;opacity:.15;">📎</div>
-      <div style="position:absolute;bottom:40px;right:80px;font-size:46px;opacity:.15;">🍎</div>
+      <div style="position:absolute;top:30px;left:30px;font-size:46px;opacity:.12;">✏️</div>
+      <div style="position:absolute;top:140px;right:60px;font-size:42px;opacity:.12;">📚</div>
+      <div style="position:absolute;bottom:90px;left:70px;font-size:44px;opacity:.12;">📎</div>
+      <div style="position:absolute;bottom:50px;right:90px;font-size:46px;opacity:.12;">🍎</div>
 
       <!-- HERO -->
       <div style="text-align:center;margin-bottom:60px;">
-        <h1 style="color:#2f4f4f;font-size:38px;margin-bottom:10px;">
-          🍎 Teacher Deals
+        <h1 style="color:#2f4f4f;font-size:42px;margin-bottom:10px;">
+          ✏️ Chalk & Save
         </h1>
-        <p style="color:#5f7777;font-size:20px;max-width:600px;margin:0 auto 30px;">
-          A beautiful way to find the best classroom supply deals.
+
+        <div style="
+          display:inline-block;
+          background:#f4f0e6;
+          color:#5a4a2f;
+          padding:8px 18px;
+          border-radius:20px;
+          font-size:15px;
+          font-weight:600;
+          margin-bottom:22px;
+        ">
+          Teacher-tested. Budget-approved.
+        </div>
+
+        <p style="color:#5f7777;font-size:20px;max-width:640px;margin:22px auto 34px;">
+          A beautiful, stress-free way to find the best classroom supply deals.
         </p>
 
         <form>
@@ -100,10 +120,10 @@ app.get("/", (req, res) => {
             display:inline-block;
             width:280px;
             margin:18px;
-            padding:24px;
+            padding:26px;
             background:white;
-            border-radius:20px;
-            box-shadow:0 12px 30px rgba(0,0,0,.08);
+            border-radius:22px;
+            box-shadow:0 14px 34px rgba(0,0,0,.1);
             vertical-align:top;
             position:relative;
           ">
@@ -124,15 +144,15 @@ app.get("/", (req, res) => {
               </div>
             ` : ""}
 
-            <div style="margin-bottom:14px;">
+            <div style="margin-bottom:16px;">
               ${storeBadge(p.store)}
             </div>
 
-            <div style="font-size:17px;font-weight:600;color:#2f3e3e;margin-bottom:14px;">
+            <div style="font-size:17px;font-weight:600;color:#2f3e3e;margin-bottom:16px;">
               ${p.title}
             </div>
 
-            <div style="font-size:28px;font-weight:bold;color:#2e7d32;margin-bottom:18px;">
+            <div style="font-size:30px;font-weight:bold;color:#2e7d32;margin-bottom:20px;">
               ${p.price}
             </div>
 
@@ -144,8 +164,8 @@ app.get("/", (req, res) => {
                 text-align:center;
                 background:#2f4f4f;
                 color:white;
-                padding:12px;
-                border-radius:12px;
+                padding:14px;
+                border-radius:14px;
                 font-size:15px;
                 text-decoration:none;
               "
