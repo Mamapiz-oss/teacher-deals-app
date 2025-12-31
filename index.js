@@ -1,288 +1,196 @@
 const express = require("express");
-const session = require("express-session");
-const bodyParser = require("body-parser");
-
 const app = express();
+
 const AMAZON_TAG = "mywebsit0e2ff-20";
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-app.use(
-  session({
-    secret: "chalkandsave-secret",
-    resave: false,
-    saveUninitialized: false
-  })
-);
-
 /* =========================
-   USERS (IN-MEMORY)
-   ========================= */
-const USERS = {}; 
-// USERS[email] = { password, favorites: [] }
-
-/* =========================
-   PRODUCTS
+   PRODUCT DATA
    ========================= */
 
 const PRODUCTS = [
-  {
-    id:"dry-erase-markers",
-    title:"Dry-Erase Markers",
-    category:"Daily Instruction",
-    price:"$10–$18",
-    store:"Amazon",
-    icon:"✏️",
-    link:`https://www.amazon.com/s?k=dry+erase+markers+classroom&tag=${AMAZON_TAG}`
-  },
-  {
-    id:"sticky-notes",
-    title:"Sticky Notes",
-    category:"Daily Instruction",
-    price:"$8–$20",
-    store:"Amazon",
-    icon:"🗒️",
-    link:`https://www.amazon.com/s?k=sticky+notes+teacher&tag=${AMAZON_TAG}`
-  },
-  {
-    id:"pocket-charts",
-    title:"Pocket Charts",
-    category:"Daily Instruction",
-    price:"$15–$30",
-    store:"Amazon",
-    icon:"📊",
-    link:`https://www.amazon.com/s?k=pocket+chart+classroom&tag=${AMAZON_TAG}`
-  },
-  {
-    id:"desk-organizer",
-    title:"Teacher Desk Organizer",
-    category:"Organization",
-    price:"$15–$35",
-    store:"Amazon",
-    icon:"🗂️",
-    link:`https://www.amazon.com/s?k=teacher+desk+organizer&tag=${AMAZON_TAG}`
-  },
-  {
-    id:"file-folders",
-    title:"File Folders",
-    category:"Organization",
-    price:"$10–$25",
-    store:"Amazon",
-    icon:"📁",
-    link:`https://www.amazon.com/s?k=file+folders+teacher&tag=${AMAZON_TAG}`
-  },
-  {
-    id:"copy-paper",
-    title:"Copy Paper (Bulk)",
-    category:"Paper & Printing",
-    price:"$25–$45",
-    store:"Staples",
-    icon:"📄",
-    link:"https://www.staples.com/copy-paper/cat_CL1408"
-  },
-  {
-    id:"construction-paper",
-    title:"Construction Paper",
-    category:"Paper & Printing",
-    price:"$12–$30",
-    store:"Amazon",
-    icon:"📘",
-    link:`https://www.amazon.com/s?k=construction+paper+classroom&tag=${AMAZON_TAG}`
-  },
-  {
-    id:"glue-sticks",
-    title:"Glue Sticks",
-    category:"Craft Supplies",
-    price:"$8–$20",
-    store:"Amazon",
-    icon:"🧴",
-    link:`https://www.amazon.com/s?k=glue+sticks+classroom&tag=${AMAZON_TAG}`
-  },
-  {
-    id:"scissors",
-    title:"Scissors",
-    category:"Craft Supplies",
-    price:"$6–$18",
-    store:"Amazon",
-    icon:"✂️",
-    link:`https://www.amazon.com/s?k=scissors+classroom&tag=${AMAZON_TAG}`
-  },
-  {
-    id:"bulletin-borders",
-    title:"Bulletin Board Borders",
-    category:"Display & Decor",
-    price:"$6–$15",
-    store:"Amazon",
-    icon:"📌",
-    link:`https://www.amazon.com/s?k=bulletin+board+borders&tag=${AMAZON_TAG}`
-  }
+  { title: "Dry-Erase Markers", category: "Daily Instruction", grades: "All", season: "All", price: "Often $10–$18", store: "Amazon", icon: "✏️", link: `https://www.amazon.com/s?k=dry+erase+markers+classroom&tag=${AMAZON_TAG}` },
+  { title: "Pocket Charts", category: "Daily Instruction", grades: "K–5", season: "All", price: "Often $15–$30", store: "Amazon", icon: "📊", link: `https://www.amazon.com/s?k=pocket+chart+classroom&tag=${AMAZON_TAG}` },
+
+  { title: "Teacher Desk Organizer", category: "Organization", grades: "All", season: "Back to School", price: "Often $15–$35", store: "Amazon", icon: "🗂️", link: `https://www.amazon.com/s?k=teacher+desk+organizer&tag=${AMAZON_TAG}` },
+  { title: "Binders (1–3 inch)", category: "Organization", grades: "All", season: "All", price: "Typically $12–$30", store: "Target", icon: "📁", link: "https://www.target.com/s?searchTerm=school+binders" },
+
+  { title: "Copy Paper (Bulk)", category: "Paper & Printing", grades: "All", season: "All", price: "Often $25–$45", store: "Staples", icon: "📄", link: "https://www.staples.com/copy-paper/cat_CL1408" },
+  { title: "Laminating Sheets", category: "Paper & Printing", grades: "All", season: "Back to School", price: "Often $15–$30", store: "Amazon", icon: "🖨️", link: `https://www.amazon.com/s?k=laminating+sheets+teacher&tag=${AMAZON_TAG}` },
+
+  { title: "Glue Sticks (Classroom Pack)", category: "Cutting & Craft", grades: "K–5", season: "All", price: "Usually under $15", store: "Amazon", icon: "✂️", link: `https://www.amazon.com/s?k=glue+sticks+bulk+classroom&tag=${AMAZON_TAG}` },
+
+  { title: "Bulletin Board Borders", category: "Display & Decor", grades: "K–5", season: "Back to School", price: "Usually $6–$15", store: "Amazon", icon: "📌", link: `https://www.amazon.com/s?k=bulletin+board+borders+classroom&tag=${AMAZON_TAG}` }
 ];
 
 /* =========================
-   HELPERS
+   STORE BADGES
    ========================= */
-
-function requireLogin(req, res, next) {
-  if (!req.session.userEmail || !USERS[req.session.userEmail]) {
-    return res.redirect("/login");
-  }
-  next();
-}
 
 function storeBadge(store) {
   const map = {
-    Amazon:["🛒","#232f3e"],
-    Staples:["📎","#444"]
+    Amazon: ["🛒", "#232f3e"],
+    Target: ["🎯", "#cc0000"],
+    Walmart: ["⭐", "#0071ce"],
+    Staples: ["📎", "#444"]
   };
-  const [icon,color] = map[store];
-  return `<span style="background:${color};color:white;padding:6px 14px;border-radius:16px;font-size:13px;">${icon} ${store}</span>`;
-}
-
-function categories() {
-  return [...new Set(PRODUCTS.map(p => p.category))];
+  const [icon, color] = map[store];
+  return `<span style="background:${color};color:white;padding:6px 14px;border-radius:16px;font-size:13px;font-weight:600;">${icon} ${store}</span>`;
 }
 
 /* =========================
-   LANDING PAGE
+   MAIN ROUTE
    ========================= */
 
 app.get("/", (req, res) => {
-  if (req.session.userEmail) return res.redirect("/shop");
-  res.send(`
-    <div style="max-width:900px;margin:120px auto;text-align:center;font-family:Segoe UI;">
-      <h1 style="font-size:48px;">✏️ Chalk & Save</h1>
-      <p style="font-size:20px;color:#444;">
-        A calm, teacher-focused way to find classroom supplies,<br>
-        compare real stores, and save your favorites.
-      </p>
-      <a href="/login" style="display:inline-block;margin-top:30px;
-        background:#2f4f4f;color:white;padding:16px 36px;
-        border-radius:28px;font-size:18px;text-decoration:none;">
-        Sign in to start →
-      </a>
-    </div>
-  `);
-});
-
-/* =========================
-   AUTH
-   ========================= */
-
-app.get("/login", (req, res) => {
-  res.send(`
-    <form method="POST" style="text-align:center;margin-top:120px;">
-      <h2>Sign In</h2>
-      <input name="email" placeholder="Email" required><br><br>
-      <input type="password" name="password" placeholder="Password" required><br><br>
-      <button>Sign In</button>
-      <p><a href="/signup">Create account</a></p>
-    </form>
-  `);
-});
-
-app.post("/login", (req, res) => {
-  const { email, password } = req.body;
-  if (!USERS[email] || USERS[email].password !== password) {
-    return res.redirect("/login");
-  }
-  req.session.userEmail = email;
-  res.redirect("/shop");
-});
-
-app.get("/signup", (req, res) => {
-  res.send(`
-    <form method="POST" style="text-align:center;margin-top:120px;">
-      <h2>Create Account</h2>
-      <input name="email" placeholder="Email" required><br><br>
-      <input type="password" name="password" placeholder="Password" required><br><br>
-      <button>Create Account</button>
-    </form>
-  `);
-});
-
-app.post("/signup", (req, res) => {
-  const { email, password } = req.body;
-  USERS[email] = { password, favorites: [] };
-  req.session.userEmail = email;
-  res.redirect("/shop");
-});
-
-/* =========================
-   FAVORITES
-   ========================= */
-
-app.post("/favorite/:id", requireLogin, (req, res) => {
-  const user = USERS[req.session.userEmail];
-  if (!user.favorites.includes(req.params.id)) {
-    user.favorites.push(req.params.id);
-  }
-  res.redirect("/shop");
-});
-
-app.get("/favorites", requireLogin, (req, res) => {
-  const user = USERS[req.session.userEmail];
-  const favs = PRODUCTS.filter(p => user.favorites.includes(p.id));
-  res.send(`
-    <h1 style="text-align:center;">❤️ My Favorites</h1>
-    <div style="text-align:center;">
-      ${favs.map(p => `<p>${p.title}</p>`).join("")}
-      <p><a href="/shop">← Back to shop</a></p>
-    </div>
-  `);
-});
-
-/* =========================
-   SHOP
-   ========================= */
-
-app.get("/shop", requireLogin, (req, res) => {
   const q = (req.query.q || "").toLowerCase();
   const category = req.query.category || "";
+  const grade = req.query.grade || "";
+  const season = req.query.season || "";
 
   const filtered = PRODUCTS.filter(p =>
     p.title.toLowerCase().includes(q) &&
-    (!category || p.category === category)
+    (!category || p.category === category) &&
+    (!grade || p.grades === grade || p.grades === "All") &&
+    (!season || p.season === season || p.season === "All")
   );
 
-  res.send(`
-    <form style="text-align:center;margin:40px;">
-      <input name="q" placeholder="Search supplies…" value="${q}">
-      <select name="category">
-        <option value="">All Categories</option>
-        ${categories().map(c => `<option ${c===category?"selected":""}>${c}</option>`).join("")}
-      </select>
-      <button>Search</button>
-      <a href="/favorites" style="margin-left:20px;">❤️ Favorites</a>
-      <a href="/logout" style="margin-left:20px;">Log out</a>
-    </form>
+  const unique = key => [...new Set(PRODUCTS.map(p => p[key]))];
 
-    <div style="text-align:center;">
-      ${filtered.map(p => `
-        <div style="display:inline-block;width:260px;margin:16px;padding:20px;
-          border-radius:22px;background:white;
-          box-shadow:0 12px 30px rgba(0,0,0,.1);">
-          <div style="font-size:40px;">${p.icon}</div>
-          ${storeBadge(p.store)}
-          <h3>${p.title}</h3>
-          <p>${p.price}</p>
-          <form method="POST" action="/favorite/${p.id}">
-            <button>⭐ Save</button>
-          </form>
-          <a href="${p.link}" target="_blank">View Options →</a>
-        </div>
-      `).join("")}
+  res.send(`
+<!DOCTYPE html>
+<html>
+<head>
+<title>Chalk & Save</title>
+
+<style>
+body {
+  margin:0;
+  font-family:'Segoe UI', Arial, sans-serif;
+  background:#f6f8f4;
+  color:#2f3e3e;
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><text x='0' y='24' font-size='24'>✏️</text></svg>") 0 24, auto;
+}
+
+.hero {
+  background:url('https://images.unsplash.com/photo-1588072432836-e10032774350');
+  background-size:cover;
+  background-position:center;
+  padding:120px 20px;
+  text-align:center;
+  color:white;
+}
+
+.hero-box {
+  background:rgba(0,0,0,.45);
+  padding:50px 60px;
+  border-radius:28px;
+  display:inline-block;
+}
+
+.filters {
+  background:#eef1ec;
+  padding:30px 20px;
+  text-align:center;
+}
+
+.filters input, .filters select {
+  padding:12px 14px;
+  margin:6px;
+  border-radius:18px;
+  border:1px solid #ccc;
+  font-size:15px;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+  gap:32px;
+  max-width:1200px;
+  margin:60px auto;
+  padding:0 20px;
+}
+
+.card {
+  background:white;
+  border-radius:26px;
+  padding:28px;
+  box-shadow:0 14px 35px rgba(0,0,0,.08);
+  text-align:center;
+  transition:.25s;
+}
+
+.card:hover {
+  transform:translateY(-6px);
+  box-shadow:0 22px 45px rgba(0,0,0,.14);
+}
+
+.button {
+  display:inline-block;
+  margin-top:12px;
+  background:#2f4f4f;
+  color:white;
+  padding:10px 22px;
+  border-radius:22px;
+  font-size:14px;
+  font-weight:600;
+  text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="hero">
+  <div class="hero-box">
+    <h1 style="font-size:52px;">✏️ Chalk & Save</h1>
+    <p style="font-size:22px;max-width:720px;">
+      A calm, beautiful place for teachers to shop classroom essentials.
+    </p>
+  </div>
+</div>
+
+<div class="filters">
+  <form>
+    <input name="q" placeholder="Search supplies…" />
+    <select name="category">
+      <option value="">Category</option>
+      ${unique("category").map(c => `<option>${c}</option>`).join("")}
+    </select>
+    <select name="grade">
+      <option value="">Grade</option>
+      ${unique("grades").map(g => `<option>${g}</option>`).join("")}
+    </select>
+    <select name="season">
+      <option value="">Season</option>
+      ${unique("season").map(s => `<option>${s}</option>`).join("")}
+    </select>
+    <button class="button">Browse</button>
+  </form>
+</div>
+
+<div class="grid">
+  ${filtered.map(p => `
+    <div class="card">
+      <div style="font-size:52px;">${p.icon}</div>
+      ${storeBadge(p.store)}
+      <h3>${p.title}</h3>
+      <div style="font-size:14px;color:#777;">${p.category} • ${p.grades}</div>
+      <div style="font-size:18px;color:#2e7d32;font-weight:bold;">${p.price}</div>
+      <a class="button" href="${p.link}" target="_blank">View Options →</a>
     </div>
+  `).join("")}
+</div>
+
+<div style="text-align:center;padding:30px 20px;font-size:14px;color:#666;">
+  <p>Prices shown are typical classroom price ranges.</p>
+  <p><strong>Affiliate Disclosure:</strong> As an Amazon Associate, I earn from qualifying purchases.</p>
+  <p>Made with 💛 for teachers</p>
+</div>
+
+</body>
+</html>
   `);
 });
-
-app.get("/logout", (req, res) => {
-  req.session.destroy(() => res.redirect("/"));
-});
-
-/* =========================
-   SERVER
-   ========================= */
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
