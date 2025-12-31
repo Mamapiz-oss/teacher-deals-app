@@ -264,5 +264,105 @@ app.get("/partner", (req, res) => {
 </html>
   `);
 });
+app.get("/partner", (req, res) => {
+  res.send(`
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Partner With Us | Chalk & Save</title>
+</head>
+
+<body style="
+  margin:0;
+  font-family:'Segoe UI', Arial, sans-serif;
+  background:#f6f8f4;
+  color:#2f3e3e;
+">
+
+  <!-- HERO -->
+  <div style="
+    padding:80px 20px;
+    text-align:center;
+    background:#eef1ec;
+  ">
+    <h1 style="font-size:46px;margin-bottom:10px;">Partner With Chalk & Save</h1>
+    <p style="font-size:20px;max-width:720px;margin:20px auto;">
+      Reach educators who are actively shopping for classroom supplies — in a space built on trust.
+    </p>
+  </div>
+
+  <!-- CONTENT -->
+  <div style="
+    max-width:900px;
+    margin:60px auto;
+    padding:0 20px;
+    font-size:18px;
+    line-height:1.6;
+  ">
+
+    <h2>👩‍🏫 Our Audience</h2>
+    <p>
+      Chalk & Save is designed for classroom teachers who regularly purchase instructional materials,
+      supplies, and resources — often with their own money.
+    </p>
+    <p>
+      Our visitors are intentional buyers looking for practical, classroom-ready solutions without
+      the overwhelm of big-box shopping.
+    </p>
+
+    <h2 style="margin-top:40px;">🤝 Why Partner With Us</h2>
+    <ul>
+      <li>Highly targeted educator audience</li>
+      <li>Teacher-first design (no pop-ups, no clutter)</li>
+      <li>Authentic recommendations, not intrusive ads</li>
+      <li>Ideal for small brands, teacher-creators, and education companies</li>
+    </ul>
+
+    <h2 style="margin-top:40px;">✨ Partnership Opportunities</h2>
+    <ul>
+      <li><strong>Featured Product Placement</strong> (Teacher Pick)</li>
+      <li><strong>Sponsored Supply Category</strong></li>
+      <li><strong>Seasonal Spotlights</strong> (Back to School, Testing Season, End of Year)</li>
+      <li><strong>Teacher-Created Brand Features</strong></li>
+    </ul>
+
+    <h2 style="margin-top:40px;">📬 Let’s Connect</h2>
+    <p>
+      If you’d like to partner with Chalk & Save or explore sponsorship opportunities,
+      we’d love to hear from you.
+    </p>
+
+    <p style="
+      background:white;
+      padding:20px;
+      border-radius:16px;
+      box-shadow:0 10px 25px rgba(0,0,0,.08);
+      display:inline-block;
+      margin-top:20px;
+    ">
+      📧 <strong>Email:</strong> <em>your-email@example.com</em>
+    </p>
+
+    <p style="margin-top:40px;font-size:15px;color:#666;">
+      Chalk & Save maintains editorial independence. All partnerships are reviewed
+      to ensure alignment with educator needs and values.
+    </p>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div style="
+    text-align:center;
+    padding:30px 20px;
+    font-size:14px;
+    color:#666;
+  ">
+    <p>Made with 💛 for teachers</p>
+  </div>
+
+</body>
+</html>
+  `);
+});
 
 app.listen(PORT);
