@@ -2,11 +2,34 @@ const express = require("express");
 const app = express();
 
 const PRODUCTS = [
-  { title: "No. 2 Pencils (12 pack)", price: "$3.26", store: "Walmart", featured: true, link: "https://www.walmart.com" },
-  { title: "No. 2 Pencils (12 pack)", price: "$3.51", store: "Amazon", featured: false, link: "https://www.amazon.com" },
+  // WRITING & BASICS
+  { title: "No. 2 Pencils (24 pack)", price: "$5.98", store: "Walmart", featured: true, link: "https://www.walmart.com" },
+  { title: "Erasers (pink, 12 pack)", price: "$3.99", store: "Amazon", featured: false, link: "https://www.amazon.com" },
+  { title: "Pencil Sharpener (manual)", price: "$4.49", store: "Target", featured: false, link: "https://www.target.com" },
+
+  // MARKERS & ART
   { title: "Crayons (24 pack)", price: "$4.19", store: "Target", featured: true, link: "https://www.target.com" },
-  { title: "Dry Erase Markers (4 pack)", price: "$6.99", store: "Staples", featured: false, link: "https://www.staples.com" },
-  { title: "Glue Sticks (12 pack)", price: "$5.49", store: "Amazon", featured: false, link: "https://www.amazon.com" }
+  { title: "Washable Markers (10 pack)", price: "$5.49", store: "Amazon", featured: false, link: "https://www.amazon.com" },
+  { title: "Dry Erase Markers (12 pack)", price: "$14.99", store: "Staples", featured: true, link: "https://www.staples.com" },
+  { title: "Colored Pencils (12 pack)", price: "$3.79", store: "Walmart", featured: false, link: "https://www.walmart.com" },
+
+  // BULLETIN BOARDS & DECOR
+  { title: "Bulletin Board Borders (multicolor)", price: "$6.99", store: "Amazon", featured: true, link: "https://www.amazon.com" },
+  { title: "Bulletin Board Letters Set", price: "$12.99", store: "Target", featured: false, link: "https://www.target.com" },
+  { title: "Classroom Posters Set", price: "$18.99", store: "Staples", featured: false, link: "https://www.staples.com" },
+
+  // PAPER & ORGANIZATION
+  { title: "Chart Paper Pad (25 sheets)", price: "$14.49", store: "Staples", featured: true, link: "https://www.staples.com" },
+  { title: "Sentence Strips (100 pack)", price: "$7.99", store: "Amazon", featured: false, link: "https://www.amazon.com" },
+  { title: "Sticky Notes (12 pack)", price: "$9.99", store: "Walmart", featured: false, link: "https://www.walmart.com" },
+
+  // STORAGE & CLASSROOM TOOLS
+  { title: "Plastic Storage Bins (set of 6)", price: "$19.99", store: "Target", featured: true, link: "https://www.target.com" },
+  { title: "Teacher Caddy Organizer", price: "$14.99", store: "Amazon", featured: false, link: "https://www.amazon.com" },
+
+  // INCENTIVES
+  { title: "Stickers (1000 pack)", price: "$8.49", store: "Walmart", featured: false, link: "https://www.walmart.com" },
+  { title: "Prize Box Toys (assorted)", price: "$16.99", store: "Amazon", featured: true, link: "https://www.amazon.com" }
 ];
 
 function storeBadge(store) {
@@ -86,7 +109,7 @@ app.get("/", (req, res) => {
             type="text"
             name="q"
             value="${query}"
-            placeholder="Search pencils, crayons, markers…"
+            placeholder="Search borders, markers, storage, prizes…"
             style="
               width:340px;
               padding:16px 20px;
