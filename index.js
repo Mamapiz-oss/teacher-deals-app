@@ -157,17 +157,24 @@ app.get("/", (req, res) => {
               ${p.price}
             </div>
 
-            <div style="
-              text-align:center;
-              background:#2f4f4f;
-              color:white;
-              padding:10px;
-              border-radius:10px;
-              font-size:14px;
-              cursor:pointer;
-            ">
-              View Deal →
-            </div>
+           <a
+  href="${p.link}"
+  target="_blank"
+  style="
+    display:block;
+    text-align:center;
+    background:#2f4f4f;
+    color:white;
+    padding:10px;
+    border-radius:10px;
+    font-size:14px;
+    text-decoration:none;
+    cursor:pointer;
+  "
+>
+  View Deal →
+</a>
+
 
           </div>
         `).join("")}
