@@ -1,5 +1,3 @@
-console.log("🔥 NEW AUTH VERSION LOADED 🔥");
-
 const express = require("express");
 const session = require("express-session");
 const bodyParser = require("body-parser");
@@ -9,14 +7,16 @@ const AMAZON_TAG = "mywebsit0e2ff-20";
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(session({
-  secret: "chalkandsave-secret",
-  resave: false,
-  saveUninitialized: false
-}));
+app.use(
+  session({
+    secret: "chalkandsave-secret",
+    resave: false,
+    saveUninitialized: false
+  })
+);
 
 /* =========================
-   IN-MEMORY USERS
+   IN-MEMORY USERS (PHASE 1)
    ========================= */
 
 const USERS = {}; // { email: password }
@@ -74,10 +74,10 @@ app.get("/", (req, res) => {
 <style>
 body {
   margin:0;
-  font-family:'Segoe UI',Arial;
+  font-family:Segoe UI, Arial;
   background:#f6f8f4;
   color:#2f3e3e;
-  cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><text x='0' y='24' font-size='24'>✏️</text></svg>") 0 24, auto;
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><text x='0' y='24' font-size='24'>✏️</text></svg>") 0 24, auto;
 }
 .hero {
   background:url('https://images.unsplash.com/photo-1588072432836-e10032774350');
@@ -184,7 +184,7 @@ app.get("/logout", (req, res) => {
 });
 
 /* =========================
-   SHOP (PROTECTED)
+   SHOP PAGE (PROTECTED)
    ========================= */
 
 app.get("/shop", requireLogin, (req, res) => {
@@ -207,27 +207,40 @@ app.get("/shop", requireLogin, (req, res) => {
 <html>
 <head><title>Shop | Chalk & Save</title></head>
 <body style="font-family:Segoe UI,Arial;background:#f6f8f4;margin:0;">
-  <div style="padding:20px;text-align:right;"><a href="/logout">Log out</a></div>
 
-  <form style="text-align:center;padding:20px;">
-    <input name="q" placeholder="Search…" />
-    <select name="category"><option value="">Category</option>${unique("category").map(c=>`<option>${c}</option>`).join("")}</select>
-    <select name="grade"><option value="">Grade</option>${unique("grades").map(g=>`<option>${g}</option>`).join("")}</select>
-    <select name="season"><option value="">Season</option>${unique("season").map(s=>`<option>${s}</option>`).join("")}</select>
-    <button>Browse</button>
-  </form>
-
-  <div style="max-width:1200px;margin:40px auto;text-align:center;">
-    ${filtered.map(p=>`
-      <div style="display:inline-block;width:260px;margin:16px;padding:24px;background:white;border-radius:22px;">
-        <div style="font-size:48px;">${p.icon}</div>
-        ${storeBadge(p.store)}
-        <h3>${p.title}</h3>
-        <div>${p.price}</div>
-        <a href="${p.link}" target="_blank">View Options →</a>
-      </div>
-    `).join("")}
+<!-- SHOP BANNER -->
+<div style="background:url('https://images.unsplash.com/photo-1588072432836-e10032774350');background-size:cover;background-position:center;padding:70px 20px;color:white;">
+  <div style="max-width:1200px;margin:0 auto;background:rgba(0,0,0,.45);padding:28px 36px;border-radius:24px;display:flex;justify-content:space-between;align-items:center;">
+    <div>
+      <h1 style="margin:0;font-size:34px;">✏️ Chalk & Save</h1>
+      <p style="margin:6px 0 0;">Welcome back — happy shopping.</p>
+    </div>
+    <a href="/logout" style="background:#2f4f4f;color:white;padding:10px 18px;border-radius:18px;text-decoration:none;font-weight:600;">Log out</a>
   </div>
+</div>
+
+<!-- FILTERS -->
+<form style="text-align:center;padding:30px 20px;background:#eef1ec;">
+  <input name="q" placeholder="Search supplies…" />
+  <select name="category"><option value="">Category</option>${unique("category").map(c=>`<option>${c}</option>`).join("")}</select>
+  <select name="grade"><option value="">Grade</option>${unique("grades").map(g=>`<option>${g}</option>`).join("")}</select>
+  <select name="season"><option value="">Season</option>${unique("season").map(s=>`<option>${s}</option>`).join("")}</select>
+  <button>Browse</button>
+</form>
+
+<!-- CARDS -->
+<div style="max-width:1200px;margin:40px auto;text-align:center;">
+  ${filtered.map(p=>`
+    <div style="display:inline-block;width:260px;margin:16px;padding:24px;background:white;border-radius:22px;box-shadow:0 14px 35px rgba(0,0,0,.08);">
+      <div style="font-size:48px;">${p.icon}</div>
+      ${storeBadge(p.store)}
+      <h3>${p.title}</h3>
+      <div>${p.price}</div>
+      <a href="${p.link}" target="_blank">View Options →</a>
+    </div>
+  `).join("")}
+</div>
+
 </body>
 </html>
   `);
