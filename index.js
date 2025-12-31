@@ -30,7 +30,7 @@ function storeBadge(store) {
 
 app.get("/", (req, res) => {
   const query = (req.query.q || "").toLowerCase();
-  const category = req.query.category;
+  const category = req.query.category || "";
 
   const filtered = PRODUCTS.filter(p =>
     p.title.toLowerCase().includes(query) &&
@@ -44,35 +44,68 @@ app.get("/", (req, res) => {
 <title>Chalk & Save</title>
 </head>
 
-<body style="margin:0;font-family:'Segoe UI',Arial;background:linear-gradient(180deg,#f6f8f4,#eef1ec);color:#2f3e3e;">
+<body style="margin:0;font-family:'Segoe UI',Arial;background:#f6f8f4;color:#2f3e3e;">
 
-<!-- HEADER -->
-<div style="padding:50px 20px;text-align:center;">
-  <div style="font-size:40px;font-weight:800;">✏️ Chalk & Save</div>
-  <div style="margin:12px auto 18px;display:inline-block;background:#f4f0e6;color:#5a4a2f;padding:8px 18px;border-radius:20px;font-weight:600;">
-    Teacher-tested. Budget-approved.
+<!-- HERO -->
+<div style="
+  background:url('https://images.unsplash.com/photo-1588072432836-e10032774350');
+  background-size:cover;
+  background-position:center;
+  padding:100px 20px;
+  text-align:center;
+  color:white;
+">
+  <div style="
+    background:rgba(0,0,0,.45);
+    display:inline-block;
+    padding:40px 50px;
+    border-radius:20px;
+  ">
+    <h1 style="font-size:48px;margin-bottom:10px;">✏️ Chalk & Save</h1>
+    <div style="
+      display:inline-block;
+      background:#f4f0e6;
+      color:#5a4a2f;
+      padding:8px 18px;
+      border-radius:20px;
+      font-weight:600;
+      margin-bottom:20px;
+    ">
+      Teacher-tested. Budget-approved.
+    </div>
+    <p style="max-width:620px;margin:20px auto 0;font-size:18px;">
+      A beautiful, stress-free way for teachers to find classroom essentials.
+    </p>
   </div>
-  <p style="max-width:640px;margin:0 auto 30px;font-size:18px;color:#556b6b;">
-    A calm, curated way to shop for classroom essentials.
-  </p>
+</div>
 
+<!-- FILTER BAR -->
+<div style="text-align:center;padding:40px 20px;background:#eef1ec;">
   <form>
-    <input type="text" name="q" value="${query}" placeholder="Search classroom supplies…" style="width:300px;padding:14px 18px;border-radius:30px;border:1px solid #ccc;font-size:16px;">
-    <button type="submit" style="margin-left:8px;padding:14px 24px;border-radius:30px;border:none;background:#2f4f4f;color:white;font-size:16px;">Search</button>
+    <select name="category" style="padding:12px 16px;border-radius:20px;font-size:16px;">
+      <option value="">Browse by category</option>
+      <option>Writing</option>
+      <option>Art</option>
+      <option>Decor</option>
+      <option>Organization</option>
+      <option>Incentives</option>
+    </select>
+    <button type="submit" style="
+      margin-left:10px;
+      padding:12px 24px;
+      border-radius:20px;
+      border:none;
+      background:#2f4f4f;
+      color:white;
+      font-size:16px;
+    ">
+      Go
+    </button>
   </form>
 </div>
 
-<!-- CATEGORIES -->
-<div style="text-align:center;margin-bottom:40px;">
-  ${["Writing","Art","Decor","Organization","Incentives"].map(c => `
-    <a href="/?category=${c}" style="display:inline-block;margin:6px 8px;padding:10px 18px;border-radius:20px;background:#ffffff;color:#2f4f4f;text-decoration:none;font-weight:600;box-shadow:0 4px 10px rgba(0,0,0,.08);">
-      ${c}
-    </a>
-  `).join("")}
-</div>
-
 <!-- CARDS -->
-<div style="max-width:1100px;margin:0 auto 60px;text-align:center;">
+<div style="max-width:1100px;margin:40px auto 60px;text-align:center;">
   ${filtered.map(p => `
     <div style="
       display:inline-block;
@@ -84,19 +117,20 @@ app.get("/", (req, res) => {
       box-shadow:0 12px 30px rgba(0,0,0,.08);
       vertical-align:top;
       position:relative;
-      transition:transform .2s, box-shadow .2s;
-    "
-    onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 18px 40px rgba(0,0,0,.12)'"
-    onmouseout="this.style.transform='none';this.style.boxShadow='0 12px 30px rgba(0,0,0,.08)'"
-    >
-
+    ">
       ${p.featured ? `<div style="position:absolute;top:16px;right:16px;background:#f4c430;color:#5a4600;font-size:12px;font-weight:bold;padding:6px 12px;border-radius:20px;">⭐ Teacher Pick</div>` : ""}
-
       <div style="margin-bottom:14px;">${storeBadge(p.store)}</div>
       <div style="font-size:17px;font-weight:600;margin-bottom:12px;">${p.title}</div>
       <div style="font-size:18px;color:#2e7d32;font-weight:bold;margin-bottom:18px;">${p.price}</div>
-
-      <a href="${p.link}" target="_blank" style="display:block;background:#2f4f4f;color:white;padding:14px;border-radius:14px;font-size:15px;text-decoration:none;">
+      <a href="${p.link}" target="_blank" style="
+        display:block;
+        background:#2f4f4f;
+        color:white;
+        padding:14px;
+        border-radius:14px;
+        font-size:15px;
+        text-decoration:none;
+      ">
         View Deal →
       </a>
     </div>
