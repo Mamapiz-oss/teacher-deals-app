@@ -270,6 +270,57 @@ app.get("/shop", requireLogin, (req, res) => {
 app.get("/logout", (req, res) => {
   req.session.destroy(() => res.redirect("/"));
 });
+app.get("/partner", (req, res) => {
+  res.send(`
+    <div style="max-width:800px;margin:80px auto;font-family:Segoe UI,Arial;">
+      <h1>Partner With Chalk & Save</h1>
+
+      <p><strong>Reach teachers where they actually shop.</strong></p>
+
+      <p>
+        Chalk & Save is a teacher-focused shopping platform designed to help educators
+        find classroom supplies across trusted retailers — without the overwhelm.
+      </p>
+
+      <p>
+        Teachers spend hundreds (often thousands) of dollars of their own money each year
+        on classroom materials. Chalk & Save exists to make that process easier, calmer,
+        and more intentional.
+      </p>
+
+      <h2>Our Audience</h2>
+      <ul>
+        <li>K–12 teachers</li>
+        <li>Instructional leaders</li>
+        <li>Educators purchasing for classrooms, small groups, and school-wide use</li>
+      </ul>
+
+      <h2>Partnership Opportunities</h2>
+      <ul>
+        <li>Featured product placements</li>
+        <li>Sponsored collections (Back to School, Testing Season, Classroom Refresh)</li>
+        <li>Seasonal highlights</li>
+        <li>Affiliate partnerships</li>
+        <li>Brand spotlights</li>
+      </ul>
+
+      <h2>Why Chalk & Save</h2>
+      <ul>
+        <li>Built specifically for teachers</li>
+        <li>Clean, distraction-free experience</li>
+        <li>Transparent recommendations</li>
+        <li>No cluttered ads or gimmicks</li>
+        <li>Designed for long-term trust</li>
+      </ul>
+
+      <h2>Let’s Work Together</h2>
+      <p>
+        Interested in partnering with Chalk & Save?<br>
+        Email: <strong>partnerships@chalkandsave.com</strong>
+      </p>
+    </div>
+  `);
+});
 
 /* SERVER */
 
