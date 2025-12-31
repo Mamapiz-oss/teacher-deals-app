@@ -206,7 +206,7 @@ app.get("/shop", requireLogin, (req, res) => {
 <!DOCTYPE html>
 <html>
 <head><title>Shop | Chalk & Save</title></head>
-<body style="font-family:Segoe UI,Arial;background:#f6f8f4;margin:0;cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><text x='0' y='24' font-size='24'>✏️</text></svg>") 0 24, auto;">
+<body style="font-family:Segoe UI,Arial;background:#f6f8f4;margin:0;">
   <div style="padding:20px;text-align:right;"><a href="/logout">Log out</a></div>
 
   <form style="text-align:center;padding:20px;">
