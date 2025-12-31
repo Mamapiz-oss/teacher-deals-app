@@ -1,6 +1,13 @@
 const express = require("express");
 const app = express();
 
+const STORE_LOGOS = {
+  Walmart: "https://upload.wikimedia.org/wikipedia/commons/c/ca/Walmart_logo.svg",
+  Amazon: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
+  Target: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Target_logo.svg",
+  Staples: "https://upload.wikimedia.org/wikipedia/commons/4/4e/Staples_logo.svg"
+};
+
 const PRODUCTS = [
   { title: "No. 2 Pencils (12 pack)", price: "$3.26", store: "Walmart", featured: true },
   { title: "No. 2 Pencils (12 pack)", price: "$3.51", store: "Amazon", featured: false },
@@ -41,7 +48,7 @@ app.get("/", (req, res) => {
         Beautiful finds. Smart prices. Made for teachers.
       </p>
 
-      <!-- FANCY SEARCH BAR -->
+      <!-- SEARCH BAR -->
       <form style="text-align:center; margin-bottom: 40px;">
         <input
           type="text"
@@ -54,7 +61,6 @@ app.get("/", (req, res) => {
             border-radius: 30px;
             border: 1px solid #ccc;
             font-size: 16px;
-            outline: none;
           "
         />
         <button
@@ -76,18 +82,14 @@ app.get("/", (req, res) => {
 
       <div style="text-align:center;">
 
-        ${filtered.length === 0 ? `
-          <p style="color:#777;">No results found.</p>
-        ` : ""}
-
         ${filtered.map(p => `
           <div style="
             display: inline-block;
-            width: 260px;
+            width: 270px;
             margin: 16px;
-            padding: 20px;
+            padding: 22px;
             background: white;
-            border-radius: 16px;
+            border-radius: 18px;
             box-shadow: 0 10px 25px rgba(0,0,0,.08);
             position: relative;
             vertical-align: top;
@@ -109,6 +111,14 @@ app.get("/", (req, res) => {
               </div>
             ` : ""}
 
+            <div style="margin-bottom: 14px;">
+              <img
+                src="${STORE_LOGOS[p.store]}"
+                alt="${p.store}"
+                style="height: 26px;"
+              />
+            </div>
+
             <div style="
               font-size: 16px;
               font-weight: 600;
@@ -128,14 +138,6 @@ app.get("/", (req, res) => {
             </div>
 
             <div style="
-              font-size: 14px;
-              color: #6b6b6b;
-              margin-bottom: 16px;
-            ">
-              ${p.store}
-            </div>
-
-            <div style="
               text-align: center;
               background: #2f4f4f;
               color: white;
@@ -143,6 +145,7 @@ app.get("/", (req, res) => {
               border-radius: 10px;
               font-size: 14px;
               cursor: pointer;
+              margin-top: 14px;
             ">
               View Deal →
             </div>
@@ -157,3 +160,4 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
+
