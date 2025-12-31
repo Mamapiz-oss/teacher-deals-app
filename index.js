@@ -61,32 +61,89 @@ function storeBadge(store) {
 }
 
 app.get("/", (req, res) => {
+  const query = (req.query.q || "").toLowerCase();
+  const filtered = PRODUCTS.filter(p =>
+    p.title.toLowerCase().includes(query)
+  );
+
   res.send(`
     <div style="
       font-family: 'Segoe UI', Arial, sans-serif;
-      background: linear-gradient(180deg,#f7f9f6,#eef2ee);
-      padding:40px;
-      min-height:100vh;
+      background:
+        url('https://cdn-icons-png.flaticon.com/512/2942/2942563.png') no-repeat top 40px left 40px,
+        url('https://cdn-icons-png.flaticon.com/512/2942/2942581.png') no-repeat top 80px right 60px,
+        linear-gradient(180deg,#f8faf7,#eef3ef);
+      background-size: 120px, 100px, cover;
+      padding: 60px 40px;
+      min-height: 100vh;
     ">
 
-      <h1 style="text-align:center;color:#2f4f4f;font-size:34px;">
-        🍎 Teacher Deals
-      </h1>
+      <!-- HERO -->
+      <div style="
+        text-align:center;
+        margin-bottom:60px;
+      ">
+        <h1 style="
+          color:#2f4f4f;
+          font-size:38px;
+          margin-bottom:10px;
+        ">
+          🍎 Teacher Deals
+        </h1>
 
-      <p style="text-align:center;color:#556b6b;font-size:18px;margin-bottom:30px;">
-        Beautiful finds. Smart prices. Made for teachers.
-      </p>
+        <p style="
+          color:#5f7777;
+          font-size:20px;
+          max-width:600px;
+          margin:0 auto 30px;
+        ">
+          The prettiest way to find the best classroom supply deals — made just for teachers.
+        </p>
 
+        <form>
+          <input
+            type="text"
+            name="q"
+            value="${query}"
+            placeholder="Search pencils, crayons, markers…"
+            style="
+              width:340px;
+              padding:16px 20px;
+              border-radius:30px;
+              border:1px solid #ccc;
+              font-size:16px;
+              outline:none;
+            "
+          />
+          <button
+            type="submit"
+            style="
+              margin-left:10px;
+              padding:16px 26px;
+              border-radius:30px;
+              border:none;
+              background:#2f4f4f;
+              color:white;
+              font-size:16px;
+              cursor:pointer;
+            "
+          >
+            Search
+          </button>
+        </form>
+      </div>
+
+      <!-- CARDS -->
       <div style="text-align:center;">
-        ${PRODUCTS.map(p => `
+        ${filtered.map(p => `
           <div style="
             display:inline-block;
-            width:270px;
-            margin:16px;
-            padding:22px;
+            width:280px;
+            margin:18px;
+            padding:24px;
             background:white;
-            border-radius:18px;
-            box-shadow:0 10px 25px rgba(0,0,0,.08);
+            border-radius:20px;
+            box-shadow:0 12px 30px rgba(0,0,0,.08);
             vertical-align:top;
             position:relative;
           ">
@@ -94,13 +151,13 @@ app.get("/", (req, res) => {
             ${p.featured ? `
               <div style="
                 position:absolute;
-                top:14px;
-                right:14px;
+                top:16px;
+                right:16px;
                 background:#f4c430;
                 color:#5a4600;
                 font-size:12px;
                 font-weight:bold;
-                padding:6px 10px;
+                padding:6px 12px;
                 border-radius:20px;
               ">
                 ⭐ Teacher Pick
@@ -111,11 +168,21 @@ app.get("/", (req, res) => {
               ${storeBadge(p.store)}
             </div>
 
-            <div style="font-size:16px;font-weight:600;color:#2f3e3e;margin-bottom:12px;">
+            <div style="
+              font-size:17px;
+              font-weight:600;
+              color:#2f3e3e;
+              margin-bottom:14px;
+            ">
               ${p.title}
             </div>
 
-            <div style="font-size:26px;font-weight:bold;color:#2e7d32;margin-bottom:16px;">
+            <div style="
+              font-size:28px;
+              font-weight:bold;
+              color:#2e7d32;
+              margin-bottom:18px;
+            ">
               ${p.price}
             </div>
 
@@ -128,8 +195,8 @@ app.get("/", (req, res) => {
                 background:#2f4f4f;
                 color:white;
                 padding:12px;
-                border-radius:10px;
-                font-size:14px;
+                border-radius:12px;
+                font-size:15px;
                 text-decoration:none;
               "
             >
