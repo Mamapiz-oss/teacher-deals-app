@@ -27,11 +27,9 @@ const USERS = {};
    ========================= */
 
 const PRODUCTS = [
-
-  // DAILY INSTRUCTION
   {
     id:"dry-erase-markers",
-    title:"Dry-Erase Markers (Assorted Colors)",
+    title:"Dry-Erase Markers",
     category:"Daily Instruction",
     price:"$10–$18",
     store:"Amazon",
@@ -40,7 +38,7 @@ const PRODUCTS = [
   },
   {
     id:"sticky-notes",
-    title:"Sticky Notes (Multi-Size Packs)",
+    title:"Sticky Notes",
     category:"Daily Instruction",
     price:"$8–$20",
     store:"Amazon",
@@ -56,8 +54,6 @@ const PRODUCTS = [
     icon:"📊",
     link:`https://www.amazon.com/s?k=pocket+chart+classroom&tag=${AMAZON_TAG}`
   },
-
-  // ORGANIZATION
   {
     id:"desk-organizer",
     title:"Teacher Desk Organizer",
@@ -69,15 +65,13 @@ const PRODUCTS = [
   },
   {
     id:"file-folders",
-    title:"File Folders (Assorted Colors)",
+    title:"File Folders",
     category:"Organization",
     price:"$10–$25",
     store:"Amazon",
     icon:"📁",
     link:`https://www.amazon.com/s?k=file+folders+teacher&tag=${AMAZON_TAG}`
   },
-
-  // PAPER & PRINTING
   {
     id:"copy-paper",
     title:"Copy Paper (Bulk)",
@@ -89,18 +83,16 @@ const PRODUCTS = [
   },
   {
     id:"construction-paper",
-    title:"Construction Paper (Bulk Packs)",
+    title:"Construction Paper",
     category:"Paper & Printing",
     price:"$12–$30",
     store:"Amazon",
     icon:"📘",
     link:`https://www.amazon.com/s?k=construction+paper+classroom&tag=${AMAZON_TAG}`
   },
-
-  // CRAFTS
   {
     id:"glue-sticks",
-    title:"Glue Sticks (Classroom Pack)",
+    title:"Glue Sticks",
     category:"Craft Supplies",
     price:"$8–$20",
     store:"Amazon",
@@ -109,15 +101,13 @@ const PRODUCTS = [
   },
   {
     id:"scissors",
-    title:"Scissors (Student-Safe)",
+    title:"Scissors",
     category:"Craft Supplies",
     price:"$6–$18",
     store:"Amazon",
     icon:"✂️",
     link:`https://www.amazon.com/s?k=scissors+classroom&tag=${AMAZON_TAG}`
   },
-
-  // DISPLAY
   {
     id:"bulletin-borders",
     title:"Bulletin Board Borders",
@@ -126,17 +116,6 @@ const PRODUCTS = [
     store:"Amazon",
     icon:"📌",
     link:`https://www.amazon.com/s?k=bulletin+board+borders&tag=${AMAZON_TAG}`
-  },
-
-  // CLEANLINESS
-  {
-    id:"disinfecting-wipes",
-    title:"Disinfecting Wipes",
-    category:"Classroom Cleanliness",
-    price:"$10–$25",
-    store:"Amazon",
-    icon:"🧼",
-    link:`https://www.amazon.com/s?k=disinfecting+wipes&tag=${AMAZON_TAG}`
   }
 ];
 
@@ -160,24 +139,35 @@ function storeBadge(store) {
   return `<span style="background:${color};color:white;padding:6px 14px;border-radius:16px;font-size:13px;">${icon} ${store}</span>`;
 }
 
-function uniqueCategories() {
+function categories() {
   return [...new Set(PRODUCTS.map(p => p.category))];
 }
 
 /* =========================
-   ROUTES
+   LANDING PAGE
    ========================= */
 
 app.get("/", (req, res) => {
   if (req.session.userEmail) return res.redirect("/shop");
   res.send(`
-    <h1 style="text-align:center;margin-top:120px;">✏️ Chalk & Save</h1>
-    <p style="text-align:center;">Smart classroom shopping for teachers</p>
-    <p style="text-align:center;"><a href="/login">Sign in to start →</a></p>
+    <div style="max-width:900px;margin:120px auto;text-align:center;font-family:Segoe UI;">
+      <h1 style="font-size:48px;">✏️ Chalk & Save</h1>
+      <p style="font-size:20px;color:#444;">
+        A calm, teacher-focused way to find classroom supplies,<br>
+        compare real stores, and save your favorites.
+      </p>
+      <a href="/login" style="display:inline-block;margin-top:30px;
+        background:#2f4f4f;color:white;padding:16px 36px;
+        border-radius:28px;font-size:18px;text-decoration:none;">
+        Sign in to start →
+      </a>
+    </div>
   `);
 });
 
-/* AUTH */
+/* =========================
+   AUTH
+   ========================= */
 
 app.get("/login", (req, res) => {
   res.send(`
@@ -218,7 +208,9 @@ app.post("/signup", (req, res) => {
   res.redirect("/shop");
 });
 
-/* FAVORITES */
+/* =========================
+   FAVORITES
+   ========================= */
 
 app.post("/favorite/:id", requireLogin, (req, res) => {
   const user = USERS[req.session.userEmail];
@@ -228,7 +220,21 @@ app.post("/favorite/:id", requireLogin, (req, res) => {
   res.redirect("/shop");
 });
 
-/* SHOP */
+app.get("/favorites", requireLogin, (req, res) => {
+  const user = USERS[req.session.userEmail];
+  const favs = PRODUCTS.filter(p => user.favorites.includes(p.id));
+  res.send(`
+    <h1 style="text-align:center;">❤️ My Favorites</h1>
+    <div style="text-align:center;">
+      ${favs.map(p => `<p>${p.title}</p>`).join("")}
+      <p><a href="/shop">← Back to shop</a></p>
+    </div>
+  `);
+});
+
+/* =========================
+   SHOP
+   ========================= */
 
 app.get("/shop", requireLogin, (req, res) => {
   const q = (req.query.q || "").toLowerCase();
@@ -244,15 +250,18 @@ app.get("/shop", requireLogin, (req, res) => {
       <input name="q" placeholder="Search supplies…" value="${q}">
       <select name="category">
         <option value="">All Categories</option>
-        ${uniqueCategories().map(c => `<option ${c===category?"selected":""}>${c}</option>`).join("")}
+        ${categories().map(c => `<option ${c===category?"selected":""}>${c}</option>`).join("")}
       </select>
       <button>Search</button>
+      <a href="/favorites" style="margin-left:20px;">❤️ Favorites</a>
       <a href="/logout" style="margin-left:20px;">Log out</a>
     </form>
 
     <div style="text-align:center;">
       ${filtered.map(p => `
-        <div style="display:inline-block;width:260px;margin:16px;padding:20px;border-radius:22px;background:white;box-shadow:0 12px 30px rgba(0,0,0,.1);">
+        <div style="display:inline-block;width:260px;margin:16px;padding:20px;
+          border-radius:22px;background:white;
+          box-shadow:0 12px 30px rgba(0,0,0,.1);">
           <div style="font-size:40px;">${p.icon}</div>
           ${storeBadge(p.store)}
           <h3>${p.title}</h3>
@@ -264,69 +273,17 @@ app.get("/shop", requireLogin, (req, res) => {
         </div>
       `).join("")}
     </div>
-    <p style="text-align:center;margin:60px 0;color:#666;font-size:14px;">
-  <a href="/partner">Partner With Us</a>
-</p>
-
   `);
 });
 
 app.get("/logout", (req, res) => {
   req.session.destroy(() => res.redirect("/"));
 });
-app.get("/partner", (req, res) => {
-  res.send(`
-    <div style="max-width:800px;margin:80px auto;font-family:Segoe UI,Arial;">
-      <h1>Partner With Chalk & Save</h1>
 
-      <p><strong>Reach teachers where they actually shop.</strong></p>
-
-      <p>
-        Chalk & Save is a teacher-focused shopping platform designed to help educators
-        find classroom supplies across trusted retailers — without the overwhelm.
-      </p>
-
-      <p>
-        Teachers spend hundreds (often thousands) of dollars of their own money each year
-        on classroom materials. Chalk & Save exists to make that process easier, calmer,
-        and more intentional.
-      </p>
-
-      <h2>Our Audience</h2>
-      <ul>
-        <li>K–12 teachers</li>
-        <li>Instructional leaders</li>
-        <li>Educators purchasing for classrooms, small groups, and school-wide use</li>
-      </ul>
-
-      <h2>Partnership Opportunities</h2>
-      <ul>
-        <li>Featured product placements</li>
-        <li>Sponsored collections (Back to School, Testing Season, Classroom Refresh)</li>
-        <li>Seasonal highlights</li>
-        <li>Affiliate partnerships</li>
-        <li>Brand spotlights</li>
-      </ul>
-
-      <h2>Why Chalk & Save</h2>
-      <ul>
-        <li>Built specifically for teachers</li>
-        <li>Clean, distraction-free experience</li>
-        <li>Transparent recommendations</li>
-        <li>No cluttered ads or gimmicks</li>
-        <li>Designed for long-term trust</li>
-      </ul>
-
-      <h2>Let’s Work Together</h2>
-      <p>
-        Interested in partnering with Chalk & Save?<br>
-        Email: <strong>partnerships@chalkandsave.com</strong>
-      </p>
-    </div>
-  `);
-});
-
-/* SERVER */
+/* =========================
+   SERVER
+   ========================= */
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
+
