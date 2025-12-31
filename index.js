@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 
 const STORE_LOGOS = {
-  Walmart: "https://upload.wikimedia.org/wikipedia/commons/1/12/Walmart_logo_2018.png",
   Amazon: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
   Target: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Target_logo.svg",
   Staples: "https://upload.wikimedia.org/wikipedia/commons/4/4e/Staples_logo.svg"
@@ -111,13 +110,30 @@ app.get("/", (req, res) => {
               </div>
             ` : ""}
 
-            <div style="margin-bottom: 14px;">
-              <img
-                src="${STORE_LOGOS[p.store]}"
-                alt="${p.store}"
-                style="height: 28px;"
-              />
-            </div>
+           <div style="margin-bottom: 14px;">
+
+  ${p.store === "Walmart" ? `
+    <div style="
+      display: inline-block;
+      background: #0071ce;
+      color: white;
+      padding: 6px 14px;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: 600;
+    ">
+      Walmart
+    </div>
+  ` : `
+    <img
+      src="${STORE_LOGOS[p.store]}"
+      alt="${p.store}"
+      style="height: 28px;"
+    />
+  `}
+
+</div>
+
 
             <div style="
               font-size: 16px;
