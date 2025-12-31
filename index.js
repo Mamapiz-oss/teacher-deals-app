@@ -83,6 +83,130 @@ body {
 .hero {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
+  gap: 50px;
+  max-width: 1200px;
+  margin: 80px auto 40px;
+  padding: 40px;
+  align-items: center;
+}
+
+.hero h1 {
+  font-size: 52px;
+  margin: 0 0 20px;
+}
+
+.hero p {
+  font-size: 20px;
+  color: #444;
+  margin-bottom: 30px;
+  line-height: 1.4;
+}
+
+.cta {
+  display: inline-block;
+  background: #2f4f4f;
+  color: white;
+  padding: 16px 36px;
+  border-radius: 28px;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.hero img {
+  width: 100%;
+  border-radius: 28px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+}
+
+/* CATEGORY PREVIEW */
+.categories {
+  max-width: 1100px;
+  margin: 40px auto 80px;
+  padding: 0 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 28px;
+}
+
+.category-card {
+  background: white;
+  border-radius: 22px;
+  padding: 26px 20px;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+.category-card span {
+  font-size: 40px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.category-card h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* mobile */
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <h1>✏️ Chalk & Save</h1>
+    <p>
+      A smarter way for teachers to shop classroom supplies.<br>
+      Compare trusted stores, save favorites, and stop overspending.
+    </p>
+    <a class="cta" href="/login">Sign in to start saving →</a>
+  </div>
+
+  <div>
+    <img src="https://images.unsplash.com/photo-1606326608606-aa0b62935f2b" alt="Teacher desk with school supplies">
+  </div>
+</div>
+
+<!-- CATEGORY PREVIEW -->
+<div class="categories">
+  <div class="category-card"><span>✏️</span><h3>Daily Instruction</h3></div>
+  <div class="category-card"><span>🗂️</span><h3>Organization</h3></div>
+  <div class="category-card"><span>📄</span><h3>Paper & Printing</h3></div>
+  <div class="category-card"><span>✂️</span><h3>Crafts & Supplies</h3></div>
+  <div class="category-card"><span>📌</span><h3>Display & Decor</h3></div>
+  <div class="category-card"><span>🖥️</span><h3>Classroom Tools</h3></div>
+</div>
+
+</body>
+</html>
+`);
+
+res.send(`
+<!DOCTYPE html>
+<html>
+<head>
+<title>Chalk & Save</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f6f8f4;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
   gap: 40px;
   max-width: 1200px;
   margin: 80px auto;
