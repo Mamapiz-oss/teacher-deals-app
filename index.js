@@ -39,14 +39,12 @@ const PRODUCTS = [
   }
 ];
 
-
 function storeBadge(store) {
   const styles = {
     Walmart: "background:#0071ce;color:white;",
     Amazon: "background:#232f3e;color:white;",
     Target: "background:#cc0000;color:white;",
     Staples: "background:#444;color:white;"
-
   };
   return `
     <span style="
@@ -63,11 +61,6 @@ function storeBadge(store) {
 }
 
 app.get("/", (req, res) => {
-  const query = (req.query.q || "").toLowerCase();
-  const filtered = PRODUCTS.filter(p =>
-    p.title.toLowerCase().includes(query)
-  );
-
   res.send(`
     <div style="
       font-family: 'Segoe UI', Arial, sans-serif;
@@ -84,39 +77,8 @@ app.get("/", (req, res) => {
         Beautiful finds. Smart prices. Made for teachers.
       </p>
 
-      <form style="text-align:center;margin-bottom:40px;">
-        <input
-          type="text"
-          name="q"
-          value="${query}"
-          placeholder="Search classroom supplies…"
-          style="
-            width:320px;
-            padding:14px 18px;
-            border-radius:30px;
-            border:1px solid #ccc;
-            font-size:16px;
-          "
-        />
-        <button
-          type="submit"
-          style="
-            margin-left:10px;
-            padding:14px 22px;
-            border-radius:30px;
-            border:none;
-            background:#2f4f4f;
-            color:white;
-            font-size:16px;
-            cursor:pointer;
-          "
-        >
-          Search
-        </button>
-      </form>
-
       <div style="text-align:center;">
-        ${filtered.map(p => `
+        ${PRODUCTS.map(p => `
           <div style="
             display:inline-block;
             width:270px;
@@ -153,28 +115,26 @@ app.get("/", (req, res) => {
               ${p.title}
             </div>
 
-            <div style="font-size:26px;font-weight:bold;color:#2e7d32;margin-bottom:14px;">
+            <div style="font-size:26px;font-weight:bold;color:#2e7d32;margin-bottom:16px;">
               ${p.price}
             </div>
 
-           <a
-  href="${p.link}"
-  target="_blank"
-  style="
-    display:block;
-    text-align:center;
-    background:#2f4f4f;
-    color:white;
-    padding:10px;
-    border-radius:10px;
-    font-size:14px;
-    text-decoration:none;
-    cursor:pointer;
-  "
->
-  View Deal →
-</a>
-
+            <a
+              href="${p.link}"
+              target="_blank"
+              style="
+                display:block;
+                text-align:center;
+                background:#2f4f4f;
+                color:white;
+                padding:12px;
+                border-radius:10px;
+                font-size:14px;
+                text-decoration:none;
+              "
+            >
+              View Deal →
+            </a>
 
           </div>
         `).join("")}
