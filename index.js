@@ -10,6 +10,11 @@ const PRODUCTS = [
 ];
 
 app.get("/", (req, res) => {
+  const query = (req.query.q || "").toLowerCase();
+  const filtered = PRODUCTS.filter(p =>
+    p.title.toLowerCase().includes(query)
+  );
+
   res.send(`
     <div style="
       font-family: 'Segoe UI', Arial, sans-serif;
@@ -22,7 +27,7 @@ app.get("/", (req, res) => {
         text-align: center;
         color: #2f4f4f;
         font-size: 34px;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
       ">
         🍎 Teacher Deals
       </h1>
@@ -30,15 +35,52 @@ app.get("/", (req, res) => {
       <p style="
         text-align: center;
         color: #556b6b;
-        margin-bottom: 40px;
+        margin-bottom: 28px;
         font-size: 18px;
       ">
         Beautiful finds. Smart prices. Made for teachers.
       </p>
 
+      <!-- FANCY SEARCH BAR -->
+      <form style="text-align:center; margin-bottom: 40px;">
+        <input
+          type="text"
+          name="q"
+          placeholder="Search classroom supplies…"
+          value="${query}"
+          style="
+            width: 320px;
+            padding: 14px 18px;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            outline: none;
+          "
+        />
+        <button
+          type="submit"
+          style="
+            margin-left: 10px;
+            padding: 14px 22px;
+            border-radius: 30px;
+            border: none;
+            background: #2f4f4f;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+          "
+        >
+          Search
+        </button>
+      </form>
+
       <div style="text-align:center;">
 
-        ${PRODUCTS.map(p => `
+        ${filtered.length === 0 ? `
+          <p style="color:#777;">No results found.</p>
+        ` : ""}
+
+        ${filtered.map(p => `
           <div style="
             display: inline-block;
             width: 260px;
@@ -49,11 +91,7 @@ app.get("/", (req, res) => {
             box-shadow: 0 10px 25px rgba(0,0,0,.08);
             position: relative;
             vertical-align: top;
-            transition: transform .2s, box-shadow .2s;
-          "
-          onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 14px 30px rgba(0,0,0,.12)'"
-          onmouseout="this.style.transform='none';this.style.boxShadow='0 10px 25px rgba(0,0,0,.08)'"
-          >
+          ">
 
             ${p.featured ? `
               <div style="
@@ -119,4 +157,3 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
-
