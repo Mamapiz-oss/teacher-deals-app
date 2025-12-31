@@ -115,7 +115,7 @@ app.get("/", (req, res) => {
               <img
                 src="${STORE_LOGOS[p.store]}"
                 alt="${p.store}"
-                style="height: 26px;"
+                style="height: 28px;"
               />
             </div>
 
